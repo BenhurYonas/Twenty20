@@ -1,0 +1,622 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Print.s
+    2 00000000         ; Student names: change this to your names or look very 
+                       silly
+    3 00000000         ; Last modification date: change this to the last modifi
+                       cation date or look very silly
+    4 00000000         ; Runs on LM4F120 or TM4C123
+    5 00000000         ; EE319K lab 7 device driver for any LCD
+    6 00000000         ;
+    7 00000000         ; As part of Lab 7, students need to implement these LCD
+                       _OutDec and LCD_OutFix
+    8 00000000         ; This driver assumes two low-level LCD functions
+    9 00000000         ; ST7735_OutChar   outputs a single 8-bit ASCII characte
+                       r
+   10 00000000         ; ST7735_OutString outputs a null-terminated string 
+   11 00000000         
+   12 00000000                 EXPORT           ConvertUDec
+   13 00000000                 EXPORT           ConvertDistance
+   14 00000000                 EXPORT           String
+   15 00000000                 AREA             DATA, ALIGN=2
+   16 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 String  SPACE            12          ; unsigned char Str
+                                                            ing[10]
+   17 0000000C                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   18 00000000                 THUMB
+   19 00000000         
+   20 00000000                 MACRO
+   21 00000000                 UMOD             $Mod,$Divnd,$Divsr ;MOD,DIVIDEN
+                                                            D,DIVISOR
+   22 00000000                 UDIV             $Mod,$Divnd,$Divsr ;Mod = DIVID
+                                                            END/DIVISOR
+   23 00000000                 MUL              $Mod,$Mod,$Divsr ;Mod = DIVISOR
+                                                            *(DIVIDEND/DIVISOR)
+                                                            
+   24 00000000                 SUB              $Mod,$Divnd,$Mod ;Mod = DIVIDEN
+                                                            D-DIVISOR*(DIVIDEND
+                                                            /DIVISOR)
+   25 00000000                 MEND
+   26 00000000         
+   27 00000000         
+   28 00000000         ; Local variables
+   29 00000000         ; each allocated 1 byte of memory (8 bits; must store as
+                        LDRB/STRB)
+   30 00000000 00000000 
+                       first   equ              0
+   31 00000000 00000001 
+                       second  equ              1
+   32 00000000 00000002 
+                       third   equ              2
+   33 00000000 00000003 
+                       fourth  equ              3
+   34 00000000         
+   35 00000000         ;-----------------------ConvertUDec---------------------
+                       --
+   36 00000000         ; Convert a 32-bit number in unsigned decimal format
+   37 00000000         ; Input: R0, 32-bit number to be transferred
+   38 00000000         ; Output: none
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   39 00000000         ; Lab 11 requirement is for at least one local variable 
+                       on the stack with symbolic binding
+   40 00000000         ; Converts a 32-bit number in unsigned decimal format
+   41 00000000         ; Output: store the conversion in global variable String
+                       [12]
+   42 00000000         ; Fixed format 4 digits, one space after, null terminati
+                       on
+   43 00000000         ; Examples
+   44 00000000         ;    4 to "   4 "  
+   45 00000000         ;   31 to "  31 " 
+   46 00000000         ;  102 to " 102 " 
+   47 00000000         ; 2210 to "2210 "
+   48 00000000         ;10000 to "**** "  any value larger than 9999 converted 
+                       to "**** "
+   49 00000000         ; Invariables: This function must not permanently modify
+                        registers R4 to R11
+   50 00000000         ConvertUDec
+   51 00000000         ; copy your lab 11 solution here
+   52 00000000 B084            SUB              SP, #16     ; allocate memory f
+                                                            or local variables
+   53 00000002 F04F 0100       MOV              R1, #0x00   ; clear counter
+   54 00000006 F242 7C0F       MOV              R12, #0x270F ; check for > 9999
+                                                            
+   55 0000000A 4560            CMP              R0, R12
+   56 0000000C D853            BHI              StarUDec
+   57 0000000E         
+   58 0000000E F04F 0C0A       MOV              R12, #0x0A
+   59 00000012                 UMOD             R2, R0, R12 ; obtain LS Digit
+   22 00000012 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000016 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000001A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+                                                            SOR)
+   60 0000001E F102 0230       ADD              R2, #0x30   ; ASCII translation
+                                                             of number
+   61 00000022 F88D 2003       STRB             R2, [SP, #fourth] ; store into 
+                                                            fourth memory slot
+   62 00000026 FBB0 F0FC       UDIV             R0, R0, R12 ; shift number to r
+                                                            ight, clearing prev
+                                                            ious LS digit
+   63 0000002A F101 0101       ADD              R1, #0x01
+   64 0000002E 2800            CMP              R0, #0x00   ; if number is zero
+                                                            , no more digits to
+                                                             convert/store
+   65 00000030 D02B            BEQ              SpaceUDec
+   66 00000032         
+   67 00000032                 UMOD             R2, R0, R12
+   22 00000032 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000036 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000003A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+                                                            SOR)
+   68 0000003E F102 0230       ADD              R2, #0x30
+   69 00000042 F88D 2002       STRB             R2, [SP, #third]
+   70 00000046 FBB0 F0FC       UDIV             R0, R0, R12
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   71 0000004A F101 0101       ADD              R1, #0x01
+   72 0000004E 2800            CMP              R0, #0x00
+   73 00000050 D01B            BEQ              SpaceUDec
+   74 00000052         
+   75 00000052                 UMOD             R2, R0, R12
+   22 00000052 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000056 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000005A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+                                                            SOR)
+   76 0000005E F102 0230       ADD              R2, #0x30
+   77 00000062 F88D 2001       STRB             R2, [SP, #second]
+   78 00000066 FBB0 F0FC       UDIV             R0, R0, R12
+   79 0000006A F101 0101       ADD              R1, #0x01
+   80 0000006E 2800            CMP              R0, #0x00
+   81 00000070 D00B            BEQ              SpaceUDec
+   82 00000072         
+   83 00000072                 UMOD             R2, R0, R12
+   22 00000072 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000076 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000007A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+                                                            SOR)
+   84 0000007E F102 0230       ADD              R2, #0x30
+   85 00000082 F88D 2000       STRB             R2, [SP, #first]
+   86 00000086 F101 0101       ADD              R1, #0x01
+   87 0000008A         
+   88 0000008A         
+   89 0000008A         SpaceUDec
+   90 0000008A F04F 0C04       MOV              R12, #0x04
+   91 0000008E EBBC 0101       SUBS             R1, R12, R1 ;if all four are fi
+                                                            lled, no spaces nee
+                                                            ded
+   92 00000092 D01A            BEQ              StoreUDec
+   93 00000094         
+   94 00000094 F04F 0C20       MOV              R12, #0x20
+   95 00000098 F88D C000       STRB             R12, [SP, #first] ; add space t
+                                                            o first memory slot
+                                                            
+   96 0000009C 3901            SUBS             R1, #0x01
+   97 0000009E D014            BEQ              StoreUDec
+   98 000000A0         
+   99 000000A0 F88D C001       STRB             R12, [SP, #second]
+  100 000000A4 3901            SUBS             R1, #0x01
+  101 000000A6 D010            BEQ              StoreUDec
+  102 000000A8         
+  103 000000A8 F88D C002       STRB             R12, [SP, #third]
+  104 000000AC 3901            SUBS             R1, #0x01
+  105 000000AE D00C            BEQ              StoreUDec
+  106 000000B0         
+  107 000000B0 F88D C003       STRB             R12, [SP, #fourth]
+  108 000000B4 E009            B                StoreUDec
+  109 000000B6         
+  110 000000B6         StarUDec
+  111 000000B6 F04F 0C2A       MOV              R12, #0x2A
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  112 000000BA F88D C000       STRB             R12, [SP, #first]
+  113 000000BE F88D C001       STRB             R12, [SP, #second]
+  114 000000C2 F88D C002       STRB             R12, [SP, #third]
+  115 000000C6 F88D C003       STRB             R12, [SP, #fourth]
+  116 000000CA         
+  117 000000CA         StoreUDec
+  118 000000CA 4A5E            LDR              R2, =String
+  119 000000CC F89D 1000       LDRB             R1, [SP, #first]
+  120 000000D0 6011            STR              R1, [R2]
+  121 000000D2 F102 0201       ADD              R2, #0x01
+  122 000000D6         
+  123 000000D6 F89D 1001       LDRB             R1, [SP, #second]
+  124 000000DA 6011            STR              R1, [R2]
+  125 000000DC F102 0201       ADD              R2, #0x01
+  126 000000E0         
+  127 000000E0 F89D 1002       LDRB             R1, [SP, #third]
+  128 000000E4 6011            STR              R1, [R2]
+  129 000000E6 F102 0201       ADD              R2, #0x01
+  130 000000EA         
+  131 000000EA F89D 1003       LDRB             R1, [SP, #fourth]
+  132 000000EE 6011            STR              R1, [R2]
+  133 000000F0 F102 0201       ADD              R2, #0x01
+  134 000000F4         
+  135 000000F4 F04F 0C20       MOV              R12, #0x20
+  136 000000F8 F8C2 C000       STR              R12, [R2]
+  137 000000FC F102 0201       ADD              R2, #0x01
+  138 00000100         
+  139 00000100 F04F 0C00       MOV              R12, #0x00
+  140 00000104 F8C2 C000       STR              R12, [R2]
+  141 00000108 F102 0201       ADD              R2, #0x01
+  142 0000010C         
+  143 0000010C         
+  144 0000010C B004            ADD              SP, #16
+  145 0000010E         
+  146 0000010E 4770            BX               LR
+  147 00000110         ;* * * * * * * * End of ConvertUDec * * * * * * * *
+  148 00000110         
+  149 00000110         ; -----------------------ConvertDistance----------------
+                       -------
+  150 00000110         ; Converts a 32-bit distance into an ASCII string
+  151 00000110         ; Input: R0, 32-bit number to be converted (resolution 0
+                       .001cm)
+  152 00000110         ; Output: store the conversion in global variable String
+                       [12]
+  153 00000110         ; Fixed format 1 digit, point, 3 digits, space, units, n
+                       ull termination
+  154 00000110         ; Examples
+  155 00000110         ;    4 to "0.004 cm"  
+  156 00000110         ;   31 to "0.031 cm" 
+  157 00000110         ;  102 to "0.102 cm" 
+  158 00000110         ; 2210 to "2.210 cm"
+  159 00000110         ;10000 to "*.*** cm"  any value larger than 9999 convert
+                       ed to "*.*** cm"
+  160 00000110         ; Invariables: This function must not permanently modify
+                        registers R4 to R11
+  161 00000110         ; Lab 11 requirement is for at least one local variable 
+                       on the stack with symbolic binding
+  162 00000110         ConvertDistance
+  163 00000110         ; copy your lab 11 solution here
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+  164 00000110 B084            SUB              SP, #16
+  165 00000112 F04F 0100       MOV              R1, #0x00
+  166 00000116 F242 7C0F       MOV              R12, #0x270F
+  167 0000011A 4560            CMP              R0, R12
+  168 0000011C D853            BHI              StarDist
+  169 0000011E         
+  170 0000011E F04F 0C0A       MOV              R12, #0x0A
+  171 00000122                 UMOD             R2, R0, R12
+   22 00000122 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000126 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000012A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+                                                            SOR)
+  172 0000012E F102 0230       ADD              R2, #0x30
+  173 00000132 F88D 2003       STRB             R2, [SP, #fourth]
+  174 00000136 FBB0 F0FC       UDIV             R0, R0, R12
+  175 0000013A F101 0101       ADD              R1, #0x01
+  176 0000013E 2800            CMP              R0, #0x00
+  177 00000140 D02B            BEQ              SpaceDist
+  178 00000142         
+  179 00000142                 UMOD             R2, R0, R12
+   22 00000142 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000146 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000014A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+                                                            SOR)
+  180 0000014E F102 0230       ADD              R2, #0x30
+  181 00000152 F88D 2002       STRB             R2, [SP, #third]
+  182 00000156 FBB0 F0FC       UDIV             R0, R0, R12
+  183 0000015A F101 0101       ADD              R1, #0x01
+  184 0000015E 2800            CMP              R0, #0x00
+  185 00000160 D01B            BEQ              SpaceDist
+  186 00000162         
+  187 00000162                 UMOD             R2, R0, R12
+   22 00000162 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000166 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000016A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+                                                            SOR)
+  188 0000016E F102 0230       ADD              R2, #0x30
+  189 00000172 F88D 2001       STRB             R2, [SP, #second]
+  190 00000176 FBB0 F0FC       UDIV             R0, R0, R12
+  191 0000017A F101 0101       ADD              R1, #0x01
+  192 0000017E 2800            CMP              R0, #0x00
+  193 00000180 D00B            BEQ              SpaceDist
+  194 00000182         
+  195 00000182                 UMOD             R2, R0, R12
+   22 00000182 FBB0 F2FC       UDIV             R2,R0,R12   ;Mod = DIVIDEND/DIV
+                                                            ISOR
+   23 00000186 FB02 F20C       MUL              R2,R2,R12   ;Mod = DIVISOR*(DIV
+                                                            IDEND/DIVISOR)
+   24 0000018A EBA0 0202       SUB              R2,R0,R2    ;Mod = DIVIDEND-DIV
+                                                            ISOR*(DIVIDEND/DIVI
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+                                                            SOR)
+  196 0000018E F102 0230       ADD              R2, #0x30
+  197 00000192 F88D 2000       STRB             R2, [SP, #first]
+  198 00000196 F101 0101       ADD              R1, #0x01
+  199 0000019A         
+  200 0000019A         
+  201 0000019A         SpaceDist
+  202 0000019A F04F 0C04       MOV              R12, #0x04
+  203 0000019E EBBC 0101       SUBS             R1, R12, R1
+  204 000001A2 D01A            BEQ              StoreDist
+  205 000001A4         
+  206 000001A4 F04F 0C30       MOV              R12, #0x30
+  207 000001A8 F88D C000       STRB             R12, [SP, #first]
+  208 000001AC 3901            SUBS             R1, #0x01
+  209 000001AE D014            BEQ              StoreDist
+  210 000001B0         
+  211 000001B0 F88D C001       STRB             R12, [SP, #second]
+  212 000001B4 3901            SUBS             R1, #0x01
+  213 000001B6 D010            BEQ              StoreDist
+  214 000001B8         
+  215 000001B8 F88D C002       STRB             R12, [SP, #third]
+  216 000001BC 3901            SUBS             R1, #0x01
+  217 000001BE D00C            BEQ              StoreDist
+  218 000001C0         
+  219 000001C0 F88D C003       STRB             R12, [SP, #fourth]
+  220 000001C4 E009            B                StoreDist
+  221 000001C6         
+  222 000001C6         StarDist
+  223 000001C6 F04F 0C2A       MOV              R12, #0x2A
+  224 000001CA F88D C000       STRB             R12, [SP, #first]
+  225 000001CE F88D C001       STRB             R12, [SP, #second]
+  226 000001D2 F88D C002       STRB             R12, [SP, #third]
+  227 000001D6 F88D C003       STRB             R12, [SP, #fourth]
+  228 000001DA         
+  229 000001DA         
+  230 000001DA         StoreDist
+  231 000001DA 4A1A            LDR              R2, =String
+  232 000001DC F89D 1000       LDRB             R1, [SP, #first]
+  233 000001E0 6011            STR              R1, [R2]
+  234 000001E2 F102 0201       ADD              R2, #0x01
+  235 000001E6         
+  236 000001E6 F04F 0C2E       MOV              R12, #0x2E
+  237 000001EA F8C2 C000       STR              R12, [R2]
+  238 000001EE F102 0201       ADD              R2, #0x01
+  239 000001F2         
+  240 000001F2 F89D 1001       LDRB             R1, [SP, #second]
+  241 000001F6 6011            STR              R1, [R2]
+  242 000001F8 F102 0201       ADD              R2, #0x01
+  243 000001FC         
+  244 000001FC F89D 1002       LDRB             R1, [SP, #third]
+  245 00000200 6011            STR              R1, [R2]
+  246 00000202 F102 0201       ADD              R2, #0x01
+  247 00000206         
+  248 00000206 F89D 1003       LDRB             R1, [SP, #fourth]
+  249 0000020A 6011            STR              R1, [R2]
+  250 0000020C F102 0201       ADD              R2, #0x01
+  251 00000210         
+  252 00000210 F04F 0C20       MOV              R12, #0x20
+  253 00000214 F8C2 C000       STR              R12, [R2]
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+  254 00000218 F102 0201       ADD              R2, #0x01
+  255 0000021C         
+  256 0000021C F04F 0C63       MOV              R12, #0x63
+  257 00000220 F8C2 C000       STR              R12, [R2]
+  258 00000224 F102 0201       ADD              R2, #0x01
+  259 00000228         
+  260 00000228 F04F 0C6D       MOV              R12, #0x6D
+  261 0000022C F8C2 C000       STR              R12, [R2]
+  262 00000230 F102 0201       ADD              R2, #0x01
+  263 00000234         
+  264 00000234 F04F 0C00       MOV              R12, #0x00
+  265 00000238 F8C2 C000       STR              R12, [R2]
+  266 0000023C F102 0201       ADD              R2, #0x01
+  267 00000240         
+  268 00000240         
+  269 00000240 B004            ADD              SP, #16
+  270 00000242         
+  271 00000242 4770            BX               LR
+  272 00000244         
+  273 00000244                 ALIGN
+  274 00000244         ;* * * * * * * * End of ConvertDistance * * * * * * * *
+  275 00000244         
+  276 00000244                 ALIGN                        ; make sure the end
+                                                             of this section is
+                                                             aligned
+  277 00000244                 END                          ; end of file
+              00000000 
+Command Line: --debug --xref --cpu=Cortex-M4 --apcs=interwork --depend=.\print.
+d -o.\print.o -ID:\Keil\ARM\RV31\INC -ID:\Keil\ARM\CMSIS\Include -ID:\Keil\ARM\
+Inc\Luminary --predefine="__EVAL SETA 1" --list=.\print.lst Print.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 15 in file Print.s
+   Uses
+      None
+Comment: DATA unused
+String 00000000
+
+Symbol: String
+   Definitions
+      At line 16 in file Print.s
+   Uses
+      At line 14 in file Print.s
+      At line 118 in file Print.s
+      At line 231 in file Print.s
+
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 17 in file Print.s
+   Uses
+      None
+Comment: .text unused
+ConvertDistance 00000110
+
+Symbol: ConvertDistance
+   Definitions
+      At line 162 in file Print.s
+   Uses
+      At line 13 in file Print.s
+Comment: ConvertDistance used once
+ConvertUDec 00000000
+
+Symbol: ConvertUDec
+   Definitions
+      At line 50 in file Print.s
+   Uses
+      At line 12 in file Print.s
+Comment: ConvertUDec used once
+SpaceDist 0000019A
+
+Symbol: SpaceDist
+   Definitions
+      At line 201 in file Print.s
+   Uses
+      At line 177 in file Print.s
+      At line 185 in file Print.s
+      At line 193 in file Print.s
+
+SpaceUDec 0000008A
+
+Symbol: SpaceUDec
+   Definitions
+      At line 89 in file Print.s
+   Uses
+      At line 65 in file Print.s
+      At line 73 in file Print.s
+      At line 81 in file Print.s
+
+StarDist 000001C6
+
+Symbol: StarDist
+   Definitions
+      At line 222 in file Print.s
+   Uses
+      At line 168 in file Print.s
+Comment: StarDist used once
+StarUDec 000000B6
+
+Symbol: StarUDec
+   Definitions
+      At line 110 in file Print.s
+   Uses
+      At line 56 in file Print.s
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+Comment: StarUDec used once
+StoreDist 000001DA
+
+Symbol: StoreDist
+   Definitions
+      At line 230 in file Print.s
+   Uses
+      At line 204 in file Print.s
+      At line 209 in file Print.s
+      At line 213 in file Print.s
+      At line 217 in file Print.s
+      At line 220 in file Print.s
+
+StoreUDec 000000CA
+
+Symbol: StoreUDec
+   Definitions
+      At line 117 in file Print.s
+   Uses
+      At line 92 in file Print.s
+      At line 97 in file Print.s
+      At line 101 in file Print.s
+      At line 105 in file Print.s
+      At line 108 in file Print.s
+
+9 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+first 00000000
+
+Symbol: first
+   Definitions
+      At line 30 in file Print.s
+   Uses
+      At line 85 in file Print.s
+      At line 95 in file Print.s
+      At line 112 in file Print.s
+      At line 119 in file Print.s
+      At line 197 in file Print.s
+      At line 207 in file Print.s
+      At line 224 in file Print.s
+      At line 232 in file Print.s
+
+fourth 00000003
+
+Symbol: fourth
+   Definitions
+      At line 33 in file Print.s
+   Uses
+      At line 61 in file Print.s
+      At line 107 in file Print.s
+      At line 115 in file Print.s
+      At line 131 in file Print.s
+      At line 173 in file Print.s
+      At line 219 in file Print.s
+      At line 227 in file Print.s
+      At line 248 in file Print.s
+
+second 00000001
+
+Symbol: second
+   Definitions
+      At line 31 in file Print.s
+   Uses
+      At line 77 in file Print.s
+      At line 99 in file Print.s
+      At line 113 in file Print.s
+      At line 123 in file Print.s
+      At line 189 in file Print.s
+      At line 211 in file Print.s
+      At line 225 in file Print.s
+      At line 240 in file Print.s
+
+third 00000002
+
+Symbol: third
+   Definitions
+      At line 32 in file Print.s
+   Uses
+      At line 69 in file Print.s
+      At line 103 in file Print.s
+      At line 114 in file Print.s
+      At line 127 in file Print.s
+      At line 181 in file Print.s
+      At line 215 in file Print.s
+      At line 226 in file Print.s
+      At line 244 in file Print.s
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Absolute symbols
+
+
+4 symbols
+348 symbols in table
