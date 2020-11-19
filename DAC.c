@@ -2,7 +2,7 @@
 // put your names here, date
 
 #include "DAC.h"
-#include "..//tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 
 
 // **************DAC_Init*********************
@@ -32,3 +32,6 @@ void DAC_Out(unsigned long data){
 	GPIO_PORTB_DATA_R = data;
 	
 }
+
+
+
