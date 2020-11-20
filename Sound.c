@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include "Sound.h"
 #include "DAC.h"
+#include "Timer0.h"
+#include "tm4c123gh6pm.h"
 
 const uint8_t shoot[4080] = {
   129, 99, 103, 164, 214, 129, 31, 105, 204, 118, 55, 92, 140, 225, 152, 61, 84, 154, 184, 101, 
@@ -1137,17 +1139,41 @@ const uint8_t highpitch[1802] = {
   67, 119, 148, 166, 164, 238, 223, 202, 174, 112, 96, 78, 0, 34, 54, 99, 143, 160, 166, 183, 
   250, 207};
 
+uint32_t Length;
+const uint8_t *SoundPt;
+	
+void SoundTask(void){
+	if(Length){
+		DAC_Out(*SoundPt/4);
+		SoundPt++;
+		Length--;
+	}else{
+		NVIC_DIS0_R = 1<<19;
+	}
+}
+	
+	
+
 void Sound_Init(void){
 // write this
+	Length = 0;
+	DAC_Init();
+	Timer0_Init(SoundTask,80000000/11000); // 11kHz
 };
 void Sound_Play(const uint8_t *pt, uint32_t count){
 // write this
+	Length = count;
+	SoundPt = pt;
+	NVIC_EN0_R = 1<<19;
+	
 };
 void Sound_Shoot(void){
 // write this
+	Sound_Play(shoot,4080);
 };
 void Sound_Killed(void){
 // write this
+	//Sound_Play(killed,4080);
 };
 void Sound_Explosion(void){
 // write this
