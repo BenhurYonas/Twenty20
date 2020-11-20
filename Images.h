@@ -8,6 +8,10 @@
 
 
 // *************************** Images ***************************
+
+const unsigned short BlackEnemy[160] = {0};
+
+
 // enemy ship that starts at the top of the screen (arms/mouth closed)
 // width=16 x height=10
 const unsigned short SmallEnemy10pointA[] = {

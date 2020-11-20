@@ -57,6 +57,7 @@
 #include "PLL.h"
 #include "ADC.h"
 #include "Images.h"
+#include "Timer1.h"
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -74,22 +75,130 @@ void LCD_OutDistance(unsigned long n){
   ST7735_OutString((char *)String);  // output using your function
 }
 
+
+
+typedef enum {dead,alive} status_t;
+struct sprite{
+	long x;   // x-coordinate
+	long y;   // y-coordinate
+	long vx, vy; //  pix/30Hz
+	const unsigned short *image; // pointer to image
+	const unsigned short *black;
+	status_t life;
+	unsigned long w; //width
+	unsigned long h; //heigh
+	unsigned long needDraw;
+};
+
+
+typedef struct sprite sprite_t;
+
+sprite_t Enemy[18]; 
+int Flag; //semaphore for needDraw
+int Anyalive; //semaphore for end of game
+
+void GameInit(void){int i;
+	Flag = 0;
+	for(i=0;i<6;i++){
+		Enemy[i].x = 20*i;
+		Enemy[i].y = 10;
+		Enemy[i].vx = 0;
+		Enemy[i].vy = 0;
+		Enemy[i].image = SmallEnemy10pointA;
+		Enemy[i].black = BlackEnemy;
+		Enemy[i].life = alive;
+		Enemy[i].w = 16;
+		Enemy[i].h = 10;
+		Enemy[i].needDraw = 1;
+		//Enemy[i].vy = 1;
+		//Enemy[i].vx = 1;
+		Enemy[i].vy = 1;		
+	}
+
+	for(i=7;i<18;i++){
+		Enemy[i].life = dead;
+	}
+}
+
+
+void GameMove(void){ int i;
+	Anyalive = 0;
+	for(i=0;i<18;i++){
+		if(Enemy[i].life == alive){
+			Enemy[i].needDraw = 1;
+			Anyalive = 1;
+			
+			if(Enemy[i].y>140){
+				Enemy[i].life = dead;
+			}else{
+				if(Enemy[i].y<10){
+					Enemy[i].life = dead;
+				}else{
+					if(Enemy[i].x<0){
+						Enemy[i].life = dead;
+					}else{
+						if(Enemy[i].x>102){
+							Enemy[i].life = dead;
+						}else{
+							Enemy[i].x += Enemy[i].vx;
+							Enemy[i].y += Enemy[i].vy;
+						}
+					}
+				}
+			}
+		}	
+	}
+}
+
+
+void GameDraw(void){int i;
+	for(i=0;i<18;i++){
+		if(Enemy[i].needDraw){
+			if(Enemy[i].life == alive){
+				ST7735_DrawBitmap(Enemy[i].x, Enemy[i].y, Enemy[i].image, Enemy[i].w, Enemy[i].h);
+			}else{
+				ST7735_DrawBitmap(Enemy[i].x, Enemy[i].y, Enemy[i].black, Enemy[i].w, Enemy[i].h);	
+			}
+			Enemy[i].needDraw = 0;
+		}
+	}
+}
+
+void GameTask(void){ //30Hz
+	GameMove();
+	
+	//check buttons, play sound, check slidepot
+	Flag = 1;
+}
+
 int main(void){
-  PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
+  DisableInterrupts();
+	PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   Random_Init(1);
 
   Output_Init();
+	GameInit();
   ST7735_FillScreen(0x0000);            // set screen to black
   
-  ST7735_DrawBitmap(52, 159, PlayerShip0, 18,8); // player ship middle bottom
-  ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
 
-  ST7735_DrawBitmap(0, 9, SmallEnemy10pointA, 16,10);
-  ST7735_DrawBitmap(20,9, SmallEnemy10pointB, 16,10);
-  ST7735_DrawBitmap(40, 9, SmallEnemy20pointA, 16,10);
-  ST7735_DrawBitmap(60, 9, SmallEnemy20pointB, 16,10);
-  ST7735_DrawBitmap(80, 9, SmallEnemy30pointA, 16,10);
-  ST7735_DrawBitmap(100, 9, SmallEnemy30pointB, 16,10);
+	ST7735_DrawBitmap(52, 159, PlayerShip0, 18,8); // player ship middle bottom
+  ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
+	Timer1_Init(&GameTask,80000000/30);
+	
+	EnableInterrupts();
+	do{
+		while(Flag==0){};
+			Flag = 0;
+			GameDraw();
+		}
+	while(Anyalive);
+
+//  ST7735_DrawBitmap(0, 9, SmallEnemy10pointA, 16,10);
+//  ST7735_DrawBitmap(20,9, SmallEnemy10pointB, 16,10);
+//  ST7735_DrawBitmap(40, 9, SmallEnemy20pointA, 16,10);
+//  ST7735_DrawBitmap(60, 9, SmallEnemy20pointB, 16,10);
+//  ST7735_DrawBitmap(80, 9, SmallEnemy30pointA, 16,10);
+//  ST7735_DrawBitmap(100, 9, SmallEnemy30pointB, 16,10);
 
   Delay100ms(50);              // delay 5 sec at 80 MHz
 
