@@ -56,6 +56,7 @@
 #include "Random.h"
 #include "PLL.h"
 #include "ADC.h"
+#include "DAC.h"
 #include "Images.h"
 #include "Timer1.h"
 
@@ -89,13 +90,14 @@ struct sprite{
 	unsigned long h; //heigh
 	unsigned long needDraw;
 };
-
-
 typedef struct sprite sprite_t;
 
 sprite_t Enemy[18]; 
+sprite_t Ship;
 int Flag; //semaphore for needDraw
 int Anyalive; //semaphore for end of game
+unsigned long ADCdata, ShipDistance; //ADC vars used for movement of ship
+
 
 void GameInit(void){int i;
 	Flag = 0;
@@ -110,19 +112,29 @@ void GameInit(void){int i;
 		Enemy[i].w = 16;
 		Enemy[i].h = 10;
 		Enemy[i].needDraw = 1;
-		//Enemy[i].vy = 1;
-		//Enemy[i].vx = 1;
+		Enemy[i].vx = 1;
 		Enemy[i].vy = 1;		
 	}
 
 	for(i=7;i<18;i++){
 		Enemy[i].life = dead;
 	}
+	Ship.x = 52;
+	Ship.y = 159;
+	Ship.image = PlayerShip0;
+	Ship.w = 18;
+	Ship.h = 8;
+	Ship.needDraw = 1;
+	Ship.life = alive;
+	Ship.black = BlackEnemy;
 }
 
 
 void GameMove(void){ int i;
 	Anyalive = 0;
+	
+	
+	//Enemy move (PRE-ALPHA TESTING)
 	for(i=0;i<18;i++){
 		if(Enemy[i].life == alive){
 			Enemy[i].needDraw = 1;
@@ -148,6 +160,17 @@ void GameMove(void){ int i;
 			}
 		}	
 	}
+	
+	
+	
+	//Spaceship move (PRE-ALPHA TESTING)
+	ADCdata = ADC0_In();
+	ShipDistance = 110*ADCdata /4096;
+	ST7735_DrawBitmap(Ship.x, Ship.y, Ship.black, Ship.w, Ship.h);
+	Ship.x = ShipDistance;
+	Ship.needDraw = 1;
+	
+	
 }
 
 
@@ -162,17 +185,18 @@ void GameDraw(void){int i;
 			Enemy[i].needDraw = 0;
 		}
 	}
+	if(Ship.needDraw){
+		ST7735_DrawBitmap(Ship.x, Ship.y, Ship.image, Ship.w, Ship.h);
+		Ship.needDraw = 0;
+	}
 }
 
 void GameTask(void){ //30Hz
-	GameMove();
 	
-	//check buttons, play sound, check slidepot
+	GameMove();
+	//check buttons, play sound, check slidepot 
 	Flag = 1;
 }
-
-
-
 
 
 
@@ -180,17 +204,18 @@ int main(void){
   DisableInterrupts();
 	PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   Random_Init(1);
-
   Output_Init();
+	ADC0_Init();
 	GameInit();
-  ST7735_FillScreen(0x0000);            // set screen to black
-  
-
-	ST7735_DrawBitmap(52, 159, PlayerShip0, 18,8); // player ship middle bottom
-  ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
 	Timer1_Init(&GameTask,80000000/30);
+  
 	
+	ST7735_FillScreen(0x0000);            // set screen to black
+	//ST7735_DrawBitmap(52, 159, PlayerShip0, 18,8); // player ship middle bottom
+  //ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
+
 	EnableInterrupts();
+	
 	do{
 		while(Flag==0){};
 			Flag = 0;
