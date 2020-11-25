@@ -1142,6 +1142,8 @@ const uint8_t highpitch[1802] = {
 uint32_t Length;
 const uint8_t *SoundPt;
 	
+
+	
 void SoundTask(void){
 	if(Length){
 		DAC_Out(*SoundPt/4);
@@ -1160,7 +1162,7 @@ void Sound_Init(void){
 	DAC_Init();
 	Timer0_Init(SoundTask,80000000/11000); // 11kHz
 };
-void Sound_Play(const uint8_t *pt, uint32_t count){
+void Sound_Play(const unsigned char *pt, unsigned long count){
 // write this
 	Length = count;
 	SoundPt = pt;
@@ -1173,7 +1175,7 @@ void Sound_Shoot(void){
 };
 void Sound_Killed(void){
 // write this
-	//Sound_Play(killed,4080);
+	Sound_Play(invaderkilled,3377);
 };
 void Sound_Explosion(void){
 // write this

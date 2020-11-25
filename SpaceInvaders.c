@@ -59,10 +59,14 @@
 #include "DAC.h"
 #include "Images.h"
 #include "Timer1.h"
+#include "Sound.h"
+
+
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 void Delay100ms(uint32_t count); // time delay in 0.1 seconds
+
 
 extern unsigned char String[12];
 void ConvertUDec(unsigned long n);
@@ -76,14 +80,21 @@ void LCD_OutDistance(unsigned long n){
   ST7735_OutString((char *)String);  // output using your function
 }
 
+void SysTickInit(void){
+	NVIC_ST_CTRL_R = 0;
+	NVIC_ST_CURRENT_R = 0;
+	NVIC_ST_RELOAD_R = 80000000/30; // 30Hz gameplay
+	NVIC_ST_CTRL_R = 0x7;
+}
 
 
 typedef enum {dead,alive} status_t;
 struct sprite{
-	long x;   // x-coordinate
-	long y;   // y-coordinate
+	long x, ox;   // x-coordinate
+	long y, oy;   // y-coordinate
 	long vx, vy; //  pix/30Hz
-	const unsigned short *image; // pointer to image
+	const unsigned short *imageA; // pointer to image
+	const unsigned short *imageB;
 	const unsigned short *black;
 	status_t life;
 	unsigned long w; //width
@@ -94,19 +105,20 @@ typedef struct sprite sprite_t;
 
 sprite_t Enemy[18]; 
 sprite_t Ship;
-int Flag; //semaphore for needDraw
+int move_flag, ADCflag; //semaphore for needDraw and ADC person movement
 int Anyalive; //semaphore for end of game
 unsigned long ADCdata, ShipDistance; //ADC vars used for movement of ship
 
 
 void GameInit(void){int i;
-	Flag = 0;
+	move_flag = 0;
 	for(i=0;i<6;i++){
 		Enemy[i].x = 20*i;
 		Enemy[i].y = 10;
 		Enemy[i].vx = 0;
 		Enemy[i].vy = 0;
-		Enemy[i].image = SmallEnemy10pointA;
+		Enemy[i].imageA = SmallEnemy10pointA;
+		//Enemy[i].imageB = SmallEnemy10pointB;
 		Enemy[i].black = BlackEnemy;
 		Enemy[i].life = alive;
 		Enemy[i].w = 16;
@@ -121,7 +133,7 @@ void GameInit(void){int i;
 	}
 	Ship.x = 52;
 	Ship.y = 159;
-	Ship.image = PlayerShip0;
+	Ship.imageA = PlayerShip0;
 	Ship.w = 18;
 	Ship.h = 8;
 	Ship.needDraw = 1;
@@ -158,18 +170,24 @@ void GameMove(void){ int i;
 					}
 				}
 			}
-		}	
+		}
+		//if(Enemy[i].imageA == SmallEnemy10pointB){
+		//	Enemy[i].imageA = SmallEnemy10pointA;
+		//}else {Enemy[i].imageA = SmallEnemy10pointB;}
 	}
 	
 	
 	
 	//Spaceship move (PRE-ALPHA TESTING)
-	ADCdata = ADC0_In();
-	ShipDistance = 110*ADCdata /4096;
-	ST7735_DrawBitmap(Ship.x, Ship.y, Ship.black, Ship.w, Ship.h);
-	Ship.x = ShipDistance;
-	Ship.needDraw = 1;
-	
+		
+	if(ADCflag == 1){
+		ADCflag = 0;
+		ADCdata = ADC0_In();
+		ShipDistance = 110*ADCdata /4096;
+		Ship.ox = Ship.x; 
+		Ship.x = ShipDistance;
+		Ship.needDraw = 1;
+	}
 	
 }
 
@@ -178,7 +196,7 @@ void GameDraw(void){int i;
 	for(i=0;i<18;i++){
 		if(Enemy[i].needDraw){
 			if(Enemy[i].life == alive){
-				ST7735_DrawBitmap(Enemy[i].x, Enemy[i].y, Enemy[i].image, Enemy[i].w, Enemy[i].h);
+				ST7735_DrawBitmap(Enemy[i].x, Enemy[i].y, Enemy[i].imageA, Enemy[i].w, Enemy[i].h);
 			}else{
 				ST7735_DrawBitmap(Enemy[i].x, Enemy[i].y, Enemy[i].black, Enemy[i].w, Enemy[i].h);	
 			}
@@ -186,17 +204,26 @@ void GameDraw(void){int i;
 		}
 	}
 	if(Ship.needDraw){
-		ST7735_DrawBitmap(Ship.x, Ship.y, Ship.image, Ship.w, Ship.h);
+		ST7735_DrawBitmap(Ship.ox, Ship.y, Ship.black, Ship.w, Ship.h);
+		ST7735_DrawBitmap(Ship.x, Ship.y, Ship.imageA, Ship.w, Ship.h);
 		Ship.needDraw = 0;
 	}
 }
 
-void GameTask(void){ //30Hz
-	
+
+void SysTick_Handler(void){  // game handler, 30 Hz
 	GameMove();
 	//check buttons, play sound, check slidepot 
-	Flag = 1;
+	move_flag = 1;
 }
+
+void ADC(void){ //40 Hz
+	ADCflag = 1;
+}
+
+
+
+
 
 
 
@@ -205,9 +232,11 @@ int main(void){
 	PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   Random_Init(1);
   Output_Init();
-	ADC0_Init();
+	
 	GameInit();
-	Timer1_Init(&GameTask,80000000/30);
+	SysTickInit();
+	//Timer0_Init(&something, 80000000/10);
+	Timer1_Init(&ADC,80000000/40);
   
 	
 	ST7735_FillScreen(0x0000);            // set screen to black
@@ -215,10 +244,10 @@ int main(void){
   //ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
 
 	EnableInterrupts();
-	
+	ADC0_Init();
 	do{
-		while(Flag==0){};
-			Flag = 0;
+		while(move_flag==0){};
+			move_flag = 0;
 			GameDraw();
 		}
 	while(Anyalive);
@@ -232,7 +261,7 @@ int main(void){
 
   Delay100ms(50);              // delay 5 sec at 80 MHz
 
-  ST7735_FillScreen(0x0000);            // set screen to black
+  ST7735_FillScreen(0xFFFF);            // set screen to black
   ST7735_SetCursor(1, 1);
   ST7735_OutString("GAME OVER");
   ST7735_SetCursor(1, 2);
@@ -258,3 +287,50 @@ void Delay100ms(uint32_t count){uint32_t volatile time;
     count--;
   }
 }
+
+
+
+void PortF_Init(void){ volatile unsigned long delay;
+  SYSCTL_RCGC2_R |= 0x00000020;     // 1) F clock
+  delay = SYSCTL_RCGC2_R;           // delay   
+  GPIO_PORTF_LOCK_R = 0x4C4F434B;   // 2) unlock PortF PF0  
+  GPIO_PORTF_CR_R = 0x1F;           // allow changes to PF4-0       
+  GPIO_PORTF_AMSEL_R = 0x00;        // 3) disable analog function
+  GPIO_PORTF_PCTL_R = 0x00000000;   // 4) GPIO clear bit PCTL  
+  GPIO_PORTF_DIR_R = 0x0E;          // 5) PF4,PF0 input, PF3,PF2,PF1 output   
+  GPIO_PORTF_AFSEL_R = 0x00;        // 6) no alternate function
+  GPIO_PORTF_PUR_R = 0x11;          // enable pullup resistors on PF4,PF0       
+  GPIO_PORTF_DEN_R = 0x1F;          // 7) enable digital pins PF4-PF0        
+}
+
+
+
+
+
+
+int mainSOUNDTEST(void){
+	unsigned long last, now;
+	DisableInterrupts();
+	PLL_Init(Bus80MHz);
+	PortF_Init();
+	Sound_Init();
+	EnableInterrupts();
+	last = GPIO_PORTF_DATA_R&0x11;
+	
+	
+	while(1){
+		now = GPIO_PORTF_DATA_R&0x11;
+		if((last ==0x11)&&(now!=0x11)){
+			Sound_Killed();
+			do{
+				now = GPIO_PORTF_DATA_R&0x11;
+			}while(now != 0x11);
+		}
+		
+	}
+	
+	
+}
+
+
+

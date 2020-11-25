@@ -30,7 +30,7 @@ void ADC0_Init(void){
   ADC0_SSMUX3_R += 1;             //    set channel Ain1 (PE2)
   ADC0_SSCTL3_R = 0x0006;         // 12) no TS0 D0, yes IE0 END0
   ADC0_ACTSS_R |= 0x0008;         // 13) enable sample sequencer 3
-	ADC0_SAC_R = 0x06;
+	//ADC0_SAC_R = 0x06;
 	
 
 }
