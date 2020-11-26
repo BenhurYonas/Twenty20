@@ -222,10 +222,7 @@ void ADC(void){ //40 Hz
 }
 
 
-
-
-
-
+unsigned long score = 0;
 
 int main(void){
   DisableInterrupts();
@@ -235,20 +232,26 @@ int main(void){
 	
 	GameInit();
 	SysTickInit();
-	//Timer0_Init(&something, 80000000/10);
 	Timer1_Init(&ADC,80000000/40);
+	
+	ST7735_SetTextColor(0x0000);
   
 	
-	ST7735_FillScreen(0x0000);            // set screen to black
+	ST7735_FillScreen(0xFFFF);            // set screen to black
 	//ST7735_DrawBitmap(52, 159, PlayerShip0, 18,8); // player ship middle bottom
   //ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
 
 	EnableInterrupts();
 	ADC0_Init();
 	do{
+		ST7735_SetCursor(1, 1);
+		ST7735_OutString("Score:");
+		ST7735_SetCursor(1, 2);
+		LCD_OutUDec(score);
 		while(move_flag==0){};
 			move_flag = 0;
 			GameDraw();
+			score++;
 		}
 	while(Anyalive);
 
@@ -261,7 +264,7 @@ int main(void){
 
   Delay100ms(50);              // delay 5 sec at 80 MHz
 
-  ST7735_FillScreen(0xFFFF);            // set screen to black
+  ST7735_FillScreen(0x0000);            // set screen to black
   ST7735_SetCursor(1, 1);
   ST7735_OutString("GAME OVER");
   ST7735_SetCursor(1, 2);
