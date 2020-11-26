@@ -11,15 +11,17 @@
 // Output: none
 void DAC_Init(void){
 	volatile unsigned long delay;
-	SYSCTL_RCGC2_R |= 0x02;
-	delay = SYSCTL_RCGC2_R;
 
-	GPIO_PORTB_DIR_R |= 0x0F;
+	SYSCTL_RCGCGPIO_R |= 0x02; // activate port B
+  delay = SYSCTL_RCGCGPIO_R;    // allow time to finish PortB clock activating
+       
+ 
+	GPIO_PORTB_DIR_R |= 0x3F;    // make PB5-0 out
 	GPIO_PORTB_AFSEL_R = 0x00;
-	GPIO_PORTB_DEN_R |= 0x0F;
+	GPIO_PORTB_DEN_R |= 0x3F;   // enable digital I/O on PB5-0
 	GPIO_PORTB_PCTL_R = 0x00;
 	GPIO_PORTB_AMSEL_R = 0x00;
-	GPIO_PORTB_DR8R_R |= 0x0F;
+	GPIO_PORTB_DR8R_R |= 0x3F;
 }
 
 
