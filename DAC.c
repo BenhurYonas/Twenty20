@@ -1,5 +1,9 @@
-// put implementations for functions, explain how it works
-// put your names here, date
+// DAC.c
+// Benhur Yonas and Diondre Dubose
+// November 25, 2020
+// Initialization and output for 6-bit DAC, used in game
+// DAC uses Port B on TM4C
+
 
 #include "DAC.h"
 #include "tm4c123gh6pm.h"

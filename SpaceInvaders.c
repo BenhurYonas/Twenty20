@@ -1,6 +1,6 @@
-// SpaceInvaders.c
+// SpaceInvaders.c (RENAME SOON)
 // Runs on LM4F120/TM4C123
-// Jonathan Valvano and Daniel Valvano
+// Jonathan Valvano and Daniel Valvano 
 // This is a starter project for the EdX Lab 15
 
 // Last Modified: 8/11/2020 
@@ -8,6 +8,8 @@
 // http://www.spaceinvaders.de/
 // sounds at http://www.classicgaming.cc/classics/spaceinvaders/sounds.php
 // http://www.classicgaming.cc/classics/spaceinvaders/playguide.php
+
+
 /* This example accompanies the books
    "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
    ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2020
@@ -26,6 +28,9 @@
  For more information about my classes, my research, and my books, see
  http://users.ece.utexas.edu/~valvano/
  */
+ 
+ 
+ 
 // ******* Possible Hardware I/O connections*******************
 // Slide pot pin 1 connected to ground
 // Slide pot pin 2 connected to PE2/AIN1
@@ -66,7 +71,7 @@ void EnableInterrupts(void);  // Enable interrupts
 void Delay100ms(uint32_t count); // time delay in 0.1 seconds
 
 
-// UDec and Distance formulas derived from Lab 11
+// UDec and Distance formulas derived from Lab 11; calls Print.s
 extern unsigned char String[12];
 void ConvertUDec(unsigned long n);
 void ConvertDistance(unsigned long n);
@@ -105,11 +110,12 @@ struct sprite{
 	unsigned long h; 							// height
 	unsigned long needDraw;       // flag set if sprite is moved around 
 };
+
+// Create variable based on sprite structure from above
 typedef struct sprite sprite_t;
 
 // Antiquated, used for testing purposes
-sprite_t Enemy[18]; 
-
+//sprite_t Enemy[18]; 
 
 // Four Sprites used in the game
 sprite_t Virus;
@@ -249,7 +255,7 @@ void GameMove(void){
 		}
 	}else if (Virus.life == alive){  // moves sprite down one until it reaches the end
 		if(Virus.y > 160){
-			Virus.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED]
+			Virus.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED] // If Collided, dead
 		}else{
 			Virus.y += Virus.vy;
 		}
@@ -268,7 +274,7 @@ void GameMove(void){
 		}
 	}else if (Cure.life == alive){  // moves sprite down one until it reaches the end
 		if(Cure.y > 160){
-			Cure.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED]
+			Cure.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED], if collided add pt
 		}else{
 			Cure.y += Cure.vy;
 		}
@@ -287,7 +293,7 @@ void GameMove(void){
 		}
 	}else if (Hornet.life == alive){  // moves sprite down one until it reaches the end
 		if(Hornet.x < -16){
-			Hornet.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED]
+			Hornet.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED]; if collided, dead
 		}else{
 			Hornet.x += Hornet.vx;
 		}
@@ -297,7 +303,7 @@ void GameMove(void){
 	
 	
 	
-	// Player move (PRE-ALPHA TESTING)
+	// Player move (ALPHA)
 		
 	if(ADCflag == 1){
 		ADCflag = 0;

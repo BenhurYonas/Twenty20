@@ -2,8 +2,11 @@
 // Runs on any computer
 // Sound assets based off the original Space Invaders 
 // Import these constants into your SpaceInvaders.c for sounds!
-// Jonathan Valvano
-// November 17, 2014
+// Original Author: Jonathan Valvano
+// Original Date:   November 17, 2014
+// Modified by:     Benhur Yonas and Diondre Dubose
+// Modified on:     November 25, 2020
+
 #include <stdint.h>
 #include "Sound.h"
 #include "DAC.h"
@@ -1139,11 +1142,14 @@ const uint8_t highpitch[1802] = {
   67, 119, 148, 166, 164, 238, 223, 202, 174, 112, 96, 78, 0, 34, 54, 99, 143, 160, 166, 183, 
   250, 207};
 
+
+
+	
+	
 uint32_t Length;
 const uint8_t *SoundPt;
 	
-
-	
+// SoundTask Handler called 11 kHz to output to DAC
 void SoundTask(void){
 	if(Length){
 		DAC_Out(*SoundPt/4);
@@ -1155,44 +1161,53 @@ void SoundTask(void){
 }
 	
 	
-
+// Sount_Init() initalizes DAC and the SoundTask Handler for interrupts
 void Sound_Init(void){
 // write this
 	Length = 0;
 	DAC_Init();
 	Timer0_Init(SoundTask,80000000/11000); // 11kHz
-};
+}
+
+
+// Sound_Play plays sound at a certain pointer and for a certain length; SoundTask interrupts will output from SoundPt
 void Sound_Play(const unsigned char *pt, unsigned long count){
 // write this
 	Length = count;
 	SoundPt = pt;
 	NVIC_EN0_R = 1<<19;
 	
-};
+}
+
+
+
+// Misc. sounds from Space Invaders (Antiquated probably)
 void Sound_Shoot(void){
 // write this
 	Sound_Play(shoot,4080);
-};
+}
 void Sound_Killed(void){
 // write this
 	Sound_Play(invaderkilled,3377);
-};
+}
 void Sound_Explosion(void){
 // write this
-};
+}
 
 void Sound_Fastinvader1(void){
 // write this
-};
+}
 void Sound_Fastinvader2(void){
 // write this
-};
+}
 void Sound_Fastinvader3(void){
 // write this
-};
+}
 void Sound_Fastinvader4(void){
 // write this
-};
+}
 void Sound_Highpitch(void){
 // write this
-};
+}
+
+

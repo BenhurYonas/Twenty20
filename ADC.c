@@ -1,15 +1,23 @@
-// put implementations for functions, explain how it works
-// put your names here, date
+// ADC.c
+// Benhur Yonas and Diondre Dubose
+// November 25, 2020
+// Initialization and output for ADC conversion, used in game
+// ADC uses Port A on TM4C
 
 
-
-#include "DAC.h"
+#include "ADC.h"
 #include "tm4c123gh6pm.h"
 
 
-
-
-
+//------------ADC0_Init------------
+// Initalize ADC0 for ADC collection
+// This initialization function sets up the ADC 
+// Max sample rate: <=125,000 samples/second
+// SS3 triggering event: software trigger
+// SS3 1st sample source: channel 1
+// SS3 interrupts: enabled but not promoted to controller
+// Input: none
+// Output: none
 void ADC0_Init(void){ 
 //	volatile unsigned long delay;
 //  SYSCTL_RCGC2_R |= 0x00000010;   // 1) activate clock for Port E
