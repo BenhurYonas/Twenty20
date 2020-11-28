@@ -167,10 +167,10 @@ void GameInit(void){
 	
 	// Initialize Data for Virus Model  (Temporarily SpaceInvaderEnemy10)
 	Virus.vy = 1;
-	Virus.image = SmallEnemy10pointA;
-	Virus.blank = BlackEnemy;
-	Virus.w = 16;
-	Virus.h = 10;
+	Virus.image = COVID_model;
+	Virus.blank = white;
+	Virus.w = 33;
+	Virus.h = 36;
 	Virus.needDraw = 0;
 	Virus.life = dead;
 	
@@ -201,7 +201,7 @@ void GameInit(void){
 	Ship.h = 8;
 	Ship.needDraw = 1;
 	Ship.life = alive;
-	Ship.black = BlackEnemy;
+	Ship.black = white;
 	
 	Anyalive = 1;  // Initalize player health (potentially add lives in future update)
 }
@@ -247,7 +247,7 @@ void GameMove(void){
 	// Virus model Move (ALPHA)
 	if (Virus.life == dead){  		// Spawns new sprite once old one is gone
 		random = Random250();
-		if (random <= 112){
+		if (random <= 95){
 			Virus.life = alive;
 			Virus.x = random;
 			Virus.y = 0;
