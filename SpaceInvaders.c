@@ -128,7 +128,7 @@ int moveflag, ADCflag; 								// semaphore for needDraw and ADC person movement
 int Anyalive; 												// semaphore for end of game
 unsigned long ADCdata, ShipDistance; 	// ADC variables used for movement of ship
 unsigned long score = 0;							// Initalizes score to zero (currently not implemented)
-unsigned long random;													// used to grab value from random generator
+unsigned long random;									// used to grab value from random generator
 
 // Random250() generates a random number between 0 and 255
 unsigned long Random250(void){
@@ -167,10 +167,10 @@ void GameInit(void){
 	
 	// Initialize Data for Virus Model  (Temporarily SpaceInvaderEnemy10)
 	Virus.vy = 1;
-	Virus.image = SmallEnemy10pointA;
-	Virus.blank = BlackEnemy;
-	Virus.w = 16;
-	Virus.h = 10;
+	Virus.image = COVID_model;
+	Virus.blank = white;
+	Virus.w = 33;
+	Virus.h = 36;
 	Virus.needDraw = 0;
 	Virus.life = dead;
 	
@@ -201,7 +201,7 @@ void GameInit(void){
 	Ship.h = 8;
 	Ship.needDraw = 1;
 	Ship.life = alive;
-	Ship.black = BlackEnemy;
+	Ship.black = white;
 	
 	Anyalive = 1;  // Initalize player health (potentially add lives in future update)
 }
@@ -247,7 +247,7 @@ void GameMove(void){
 	// Virus model Move (ALPHA)
 	if (Virus.life == dead){  		// Spawns new sprite once old one is gone
 		random = Random250();
-		if (random <= 112){
+		if (random <= 95){
 			Virus.life = alive;
 			Virus.x = random;
 			Virus.y = 0;
@@ -312,7 +312,11 @@ void GameMove(void){
 		Ship.ox = Ship.x; 
 		Ship.x = ShipDistance;
 		Ship.needDraw = 1;
-	} // CHECK FOR JUMP/CROUCH
+	} 
+	
+	
+	
+	// CHECK FOR JUMP/CROUCH
 	
 	
 	
@@ -408,10 +412,11 @@ int main(void){
 	
 	
 	// Initalize all of the things needed for the game
-	Random_Init(1);
+	SysTickInit();
+	Random_Init(NVIC_ST_CURRENT_R);
   Output_Init();
 	GameInit();
-	SysTickInit();
+	
 	//Sound_Init();
 	ADC0_Init();
 	Timer1_Init(&ADC,80000000/40);
