@@ -119,7 +119,7 @@ typedef struct sprite sprite_t;
 
 // Four Sprites used in the game
 sprite_t Virus;
-sprite_t Ship;
+sprite_t Player;
 sprite_t Cure;
 sprite_t Hornet;
 
@@ -176,10 +176,10 @@ void GameInit(void){
 	
 	// Initialize Data for Cure Model  (Temporarily SpaceInvaderEnemy20)
 	Cure.vy = 1;
-	Cure.image = SmallEnemy20pointA;
-	Cure.blank = BlackEnemy;
-	Cure.w = 16;
-	Cure.h = 10;
+	Cure.image = test_tube;
+	Cure.blank = white;
+	Cure.w = 10;
+	Cure.h = 18;
 	Cure.needDraw = 0;
 	Cure.life = dead;
 	
@@ -194,21 +194,35 @@ void GameInit(void){
 	
 	
 	// Initialize Data for Player Model (Temporarily SpaceInvaderShip)
-	Ship.x = 52;
-	Ship.y = 159;
-	Ship.image = PlayerShip0;
-	Ship.w = 18;
-	Ship.h = 8;
-	Ship.needDraw = 1;
-	Ship.life = alive;
-	Ship.black = white;
+	Player.x = 52;
+	Player.y = 159;
+	Player.image = PlayerShip0;
+	Player.w = 18;
+	Player.h = 8;
+	Player.needDraw = 1;
+	Player.life = alive;
+	Player.black = white;
 	
 	Anyalive = 1;  // Initalize player health (potentially add lives in future update)
 }
 
 
+// Collision() detects if two objects are touching each other, registering a collision
+// returns a 1 if collision detected
+// returns a 0 if no collision detected
+// Credit given to Aleksey (http://eekit.blogspot.com/2017/02/the-basics-of-arduino-game-programming_19.html)
+unsigned char Collision(unsigned char x1, unsigned char y1, unsigned char w1, unsigned char h1, unsigned char x2, unsigned char y2, unsigned char w2, unsigned char h2){
+	if (x1>(x2+w2) || x2>(x1+w1)) return 0;
+	if (y1>(y2+h2) || y2>(y1+h1)) return 0;
+	return 1;
+}
 
-// GameMove() moves the sprites around in relation to the game, checks for collisions between player and other sprites
+
+
+
+// GameMove() moves the sprites around in relation to the game
+// checks for collisions between player and other sprites
+// plays sounds based on collisions
 void GameMove(void){ 
 	
 	
@@ -257,7 +271,13 @@ void GameMove(void){
 		if(Virus.y > 196){
 			Virus.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED] // If Collided, dead
 		}else{
-			Virus.y += Virus.vy;
+			if(Collision(Player.x, Player.y, Player.w, Player.h, Virus.x, Virus.y, Virus.w, Virus.h) == 1){
+				Player.life = dead;
+				Anyalive = 0;
+				
+			}else{
+				Virus.y += Virus.vy;
+			}
 		}
 		Virus.needDraw = 1;
 	}
@@ -276,7 +296,13 @@ void GameMove(void){
 		if(Cure.y > 160){
 			Cure.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED], if collided add pt
 		}else{
-			Cure.y += Cure.vy;
+			if(Collision(Player.x, Player.y, Player.w, Player.h, Cure.x, Cure.y, Cure.w, Cure.h) == 1){
+				Cure.life = dead;
+				score++;
+				// ADD SOUND HERE
+			}else{
+				Cure.y += Cure.vy;
+			}
 		}
 		Cure.needDraw = 1;
 	}
@@ -309,9 +335,9 @@ void GameMove(void){
 		ADCflag = 0;
 		ADCdata = ADC0_In();
 		ShipDistance = 110*ADCdata /4096;
-		Ship.ox = Ship.x; 
-		Ship.x = ShipDistance;
-		Ship.needDraw = 1;
+		Player.ox = Player.x; 
+		Player.x = ShipDistance;
+		Player.needDraw = 1;
 	} 
 	
 	
@@ -374,15 +400,15 @@ void GameDraw(void){
 	
 	
 	// GameDraw for Player Model
-	if(Ship.needDraw){
-		if(Ship.life == alive){
-			ST7735_DrawBitmap(Ship.ox, Ship.y, Ship.black, Ship.w, Ship.h);
-			ST7735_DrawBitmap(Ship.x, Ship.y, Ship.image, Ship.w, Ship.h);
+	if(Player.needDraw){
+		if(Player.life == alive){
+			ST7735_DrawBitmap(Player.ox, Player.y, Player.black, Player.w, Player.h);
+			ST7735_DrawBitmap(Player.x, Player.y, Player.image, Player.w, Player.h);
 			
 		}else{
 			Anyalive = 0;
 		}
-		Ship.needDraw = 0;
+		Player.needDraw = 0;
 		
 	}
 }
@@ -437,7 +463,7 @@ int main(void){
 		while(moveflag==0){};
 			moveflag = 0;
 			GameDraw();
-			score++;
+			//score++;
 			//Sound_Shoot();
 		}
 	while(Anyalive);
@@ -456,11 +482,9 @@ int main(void){
   ST7735_SetCursor(1, 1);
   ST7735_OutString("GAME OVER");
   ST7735_SetCursor(1, 2);
-  ST7735_OutString("Nice try,");
-  ST7735_SetCursor(1, 3);
-  ST7735_OutString("Earthling!");
-  ST7735_SetCursor(2, 4);
-  LCD_OutUDec(1234);
+	ST7735_OutString("Your Score:");
+  ST7735_SetCursor(2, 3);
+  LCD_OutUDec(score);
   while(1){
   }
 
