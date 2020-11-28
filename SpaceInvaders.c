@@ -185,10 +185,10 @@ void GameInit(void){
 	
 	// Initialize Data for Hornet Model  (Temporarily SpaceInvaderEnemy30)
 	Hornet.vx = -1;
-	Hornet.image = SmallEnemy30pointA;
-	Hornet.blank = BlackEnemy;
-	Hornet.w = 16;
-	Hornet.h = 10;
+	Hornet.image = hornet;
+	Hornet.blank = white;
+	Hornet.w = 15;
+	Hornet.h = 12;
 	Hornet.needDraw = 0;
 	Hornet.life = dead;
 	
@@ -254,7 +254,7 @@ void GameMove(void){
 			Virus.needDraw = 1;
 		}
 	}else if (Virus.life == alive){  // moves sprite down one until it reaches the end
-		if(Virus.y > 160){
+		if(Virus.y > 196){
 			Virus.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED] // If Collided, dead
 		}else{
 			Virus.y += Virus.vy;
@@ -292,7 +292,7 @@ void GameMove(void){
 			Hornet.needDraw = 1;
 		}
 	}else if (Hornet.life == alive){  // moves sprite down one until it reaches the end
-		if(Hornet.x < -16){
+		if(Hornet.x < -15){
 			Hornet.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED]; if collided, dead
 		}else{
 			Hornet.x += Hornet.vx;
