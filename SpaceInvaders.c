@@ -142,30 +142,7 @@ unsigned long Random250(void){
 void GameInit(void){
 	moveflag = 0;			// initalize moveflag to zero while sprite data is setup
 	
-// Antiquated for testing
-//	for(i=0;i<6;i++){
-//		Enemy[i].x = 20*i;
-//		Enemy[i].y = 10;
-//		Enemy[i].vx = 0;
-//		Enemy[i].vy = 0;
-//		Enemy[i].image = SmallEnemy10pointA;
-//		//Enemy[i].imageB = SmallEnemy10pointB;
-//		Enemy[i].black = BlackEnemy;
-//		Enemy[i].life = alive;
-//		Enemy[i].w = 16;
-//		Enemy[i].h = 10;
-//		Enemy[i].needDraw = 1;
-//		Enemy[i].vx = 1;
-//		Enemy[i].vy = 1;		
-//	}
-
-//	for(i=7;i<18;i++){
-//		Enemy[i].life = dead;
-//	}
-	
-	
-	
-	// Initialize Data for Virus Model  (Temporarily SpaceInvaderEnemy10)
+	// Initialize Data for Virus Model  
 	Virus.vy = 1;
 	Virus.image = COVID_model;
 	Virus.blank = white;
@@ -174,7 +151,7 @@ void GameInit(void){
 	Virus.needDraw = 0;
 	Virus.life = dead;
 	
-	// Initialize Data for Cure Model  (Temporarily SpaceInvaderEnemy20)
+	// Initialize Data for Cure Model 
 	Cure.vy = 1;
 	Cure.image = test_tube;
 	Cure.blank = white;
@@ -183,7 +160,7 @@ void GameInit(void){
 	Cure.needDraw = 0;
 	Cure.life = dead;
 	
-	// Initialize Data for Hornet Model  (Temporarily SpaceInvaderEnemy30)
+	// Initialize Data for Hornet Model  
 	Hornet.vx = -1;
 	Hornet.image = hornet;
 	Hornet.blank = white;
@@ -196,12 +173,12 @@ void GameInit(void){
 	// Initialize Data for Player Model (Temporarily SpaceInvaderShip)
 	Player.x = 52;
 	Player.y = 159;
-	Player.image = PlayerShip0;
-	Player.w = 18;
-	Player.h = 8;
+	Player.image = valvano;
+	Player.w = 16;
+	Player.h = 20;
 	Player.needDraw = 1;
 	Player.life = alive;
-	Player.black = white;
+	Player.blank = white;
 	
 	Anyalive = 1;  // Initalize player health (potentially add lives in future update)
 }
@@ -212,9 +189,13 @@ void GameInit(void){
 // returns a 0 if no collision detected
 // Credit given to Aleksey (http://eekit.blogspot.com/2017/02/the-basics-of-arduino-game-programming_19.html)
 unsigned char Collision(unsigned char x1, unsigned char y1, unsigned char w1, unsigned char h1, unsigned char x2, unsigned char y2, unsigned char w2, unsigned char h2){
-	if (x1>(x2+w2) || x2>(x1+w1)) return 0;
-	if (y1>(y2+h2) || y2>(y1+h1)) return 0;
-	return 1;
+	//if (x1>(x2+w2) || x2>(x1+w1)) return 0;
+	//if (y1>(y2-h2) || y2>(y1-h1)) return 0;
+	
+	if(((x2+w2)>x1) && ((y2+h2)>y1) && (x2 < (x1+w1)) && (y2 < (y1+h1))){
+		return 1;
+	}
+	return 0;
 }
 
 
@@ -224,39 +205,6 @@ unsigned char Collision(unsigned char x1, unsigned char y1, unsigned char w1, un
 // checks for collisions between player and other sprites
 // plays sounds based on collisions
 void GameMove(void){ 
-	
-	
-//	//Enemy move (PRE-ALPHA TESTING)
-//	for(i=0;i<18;i++){
-//		if(Enemy[i].life == alive){
-//			Enemy[i].needDraw = 1;
-//			Anyalive = 1;
-//			
-//			if(Enemy[i].y>140){
-//				Enemy[i].life = dead;
-//			}else{
-//				if(Enemy[i].y<10){
-//					Enemy[i].life = dead;
-//				}else{
-//					if(Enemy[i].x<0){
-//						Enemy[i].life = dead;
-//					}else{
-//						if(Enemy[i].x>102){
-//							Enemy[i].life = dead;
-//						}else{
-//							Enemy[i].x += Enemy[i].vx;
-//							Enemy[i].y += Enemy[i].vy;
-//						}
-//					}
-//				}
-//			}
-//		}
-//		//if(Enemy[i].imageA == SmallEnemy10pointB){
-//		//	Enemy[i].imageA = SmallEnemy10pointA;
-//		//}else {Enemy[i].imageA = SmallEnemy10pointB;}
-//	}
-	
-	
 	
 	// Virus model Move (ALPHA)
 	if (Virus.life == dead){  		// Spawns new sprite once old one is gone
@@ -269,12 +217,11 @@ void GameMove(void){
 		}
 	}else if (Virus.life == alive){  // moves sprite down one until it reaches the end
 		if(Virus.y > 196){
-			Virus.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED] // If Collided, dead
+			Virus.life = dead;					
 		}else{
-			if(Collision(Player.x, Player.y, Player.w, Player.h, Virus.x, Virus.y, Virus.w, Virus.h) == 1){
+			if(Collision(Player.x, Player.y, Player.w, Player.h, Virus.x, Virus.y, Virus.w, Virus.h) == 1){  // Check for collision, If Collided, dead
 				Player.life = dead;
 				Anyalive = 0;
-				
 			}else{
 				Virus.y += Virus.vy;
 			}
@@ -294,9 +241,9 @@ void GameMove(void){
 		}
 	}else if (Cure.life == alive){  // moves sprite down one until it reaches the end
 		if(Cure.y > 160){
-			Cure.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED], if collided add pt
+			Cure.life = dead;					 
 		}else{
-			if(Collision(Player.x, Player.y, Player.w, Player.h, Cure.x, Cure.y, Cure.w, Cure.h) == 1){
+			if(Collision(Player.x, Player.y, Player.w, Player.h, Cure.x, Cure.y, Cure.w, Cure.h) == 1){ // Check for collision, if collided add pt
 				Cure.life = dead;
 				score++;
 				// ADD SOUND HERE
@@ -326,15 +273,12 @@ void GameMove(void){
 		Hornet.needDraw = 1;
 	}
 	
-	
-	
-	
 	// Player move (ALPHA)
 		
 	if(ADCflag == 1){
 		ADCflag = 0;
 		ADCdata = ADC0_In();
-		ShipDistance = 110*ADCdata /4096;
+		ShipDistance = 111*ADCdata /4096;
 		Player.ox = Player.x; 
 		Player.x = ShipDistance;
 		Player.needDraw = 1;
@@ -351,21 +295,6 @@ void GameMove(void){
 
 // GameDraw() checks conditions of each sprite and calls ST7735_DrawBitmap() to (re)draw sprites on the LCD
 void GameDraw(void){
-	
-// antiquated
-	
-//	for(i=0;i<18;i++){
-//		if(Enemy[i].needDraw){
-//			if(Enemy[i].life == alive){
-//				ST7735_DrawBitmap(Enemy[i].x, Enemy[i].y, Enemy[i].image, Enemy[i].w, Enemy[i].h);
-//			}else{
-//				ST7735_DrawBitmap(Enemy[i].x, Enemy[i].y, Enemy[i].black, Enemy[i].w, Enemy[i].h);	
-//			}
-//			Enemy[i].needDraw = 0;
-//		}
-//	}
-	
-	
 	
 	// GameDraw for Virus Model
 	if(Virus.needDraw){
@@ -394,7 +323,7 @@ void GameDraw(void){
 		}else{
 			ST7735_DrawBitmap(Hornet.x, Hornet.y, Hornet.blank, Hornet.w, Hornet.h);
 		}
-		Cure.needDraw = 0;
+		Hornet.needDraw = 0;
 	}
 	
 	
@@ -402,7 +331,7 @@ void GameDraw(void){
 	// GameDraw for Player Model
 	if(Player.needDraw){
 		if(Player.life == alive){
-			ST7735_DrawBitmap(Player.ox, Player.y, Player.black, Player.w, Player.h);
+			ST7735_DrawBitmap(Player.ox, Player.y, Player.blank, Player.w, Player.h);
 			ST7735_DrawBitmap(Player.x, Player.y, Player.image, Player.w, Player.h);
 			
 		}else{
@@ -436,6 +365,7 @@ int main(void){
 	// would go around this point; Output_Init would have 
 	// to get called before here to allow display
 	
+
 	
 	// Initalize all of the things needed for the game
 	SysTickInit();
@@ -463,7 +393,6 @@ int main(void){
 		while(moveflag==0){};
 			moveflag = 0;
 			GameDraw();
-			//score++;
 			//Sound_Shoot();
 		}
 	while(Anyalive);
@@ -476,7 +405,7 @@ int main(void){
 //  ST7735_DrawBitmap(80, 9, SmallEnemy30pointA, 16,10);
 //  ST7735_DrawBitmap(100, 9, SmallEnemy30pointB, 16,10);
 
-  Delay100ms(50);              // delay 5 sec at 80 MHz
+  //Delay100ms(50);              // delay 5 sec at 80 MHz
 
   ST7735_FillScreen(0x0000);            // set screen to black
   ST7735_SetCursor(1, 1);
