@@ -84,6 +84,18 @@ void LCD_OutDistance(unsigned long n){
   ST7735_OutString((char *)String);  // output using your function
 }
 
+void PortE_Init(void){ volatile unsigned long delay;
+  SYSCTL_RCGC2_R |= 0x00000010;     // 1) E clock
+  delay = SYSCTL_RCGC2_R;           // delay   
+//  GPIO_PORTE_LOCK_R = 0x4C4F434B;   // 2) unlock PortE PE0  
+//  GPIO_PORTE_CR_R = 0x1F;           // allow changes to PE4-0       
+  GPIO_PORTE_AMSEL_R &= ~0x03;        // 3) disable analog function
+  GPIO_PORTE_PCTL_R &= ~0x00000003;   // 4) GPIO clear bit PCTL  
+  GPIO_PORTE_DIR_R &= ~0x03;          // 5) PF4,PF0 input, PF3,PF2,PF1 output   
+  GPIO_PORTE_AFSEL_R &= ~0x03;        // 6) no alternate function      
+  GPIO_PORTE_DEN_R |= 0x03;          // 7) enable digital pins PF4-PF0     
+}
+
 // SysTick Initalization: 30 Hz interrupts
 void SysTickInit(void){
 	NVIC_ST_CTRL_R = 0;
@@ -287,11 +299,21 @@ void GameMove(void){
 	
 	
 	// CHECK FOR JUMP/CROUCH
-	
-	
+	long Jumping=5;
+if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x01))
+	{
+		while(Jumping != 0)
+			{
+				Jumping--;
+				Player.y= Player.y +15;
+		}
 	
 }
+ if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02)
+ {
+ }
 
+}
 
 // GameDraw() checks conditions of each sprite and calls ST7735_DrawBitmap() to (re)draw sprites on the LCD
 void GameDraw(void){

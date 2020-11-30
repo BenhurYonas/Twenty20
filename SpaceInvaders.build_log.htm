@@ -3,86 +3,17 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\benhu\Documents\GitHub\EE319K_Game\SpaceInvaders.uvproj
-Project File Date:  11/20/2020
+C:\Users\Diondre\Documents\GitHub\EE319K_Game\SpaceInvaders.uvproj
+Project File Date:  11/30/2020
 
 <h2>Output:</h2>
 Build target 'SpaceInvaders'
-compiling SpaceInvaders.c...
 linking...
-Program Size: Code=5660 RO-data=18244 RW-data=96 ZI-data=1344  
+Program Size: Code=5712 RO-data=18244 RW-data=96 ZI-data=1344  
 ".\SpaceInvaders.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\benhu\\Documents\\GitHub\\EE319K_Game\\SpaceInvaders.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-paceInvaders.c(230): warning:  #940-D: missing return statement at end of non-void function "Collision"
-        }
-SpaceInvaders.c(234): error:  #169: expected a declaration
-        if (Cure.life == dead){                 // Spawns new sprite once old one is gone
-SpaceInvaders.c(386): warning:  #12-D: parsing restarts here after previous syntax error
-        EnableInterrupts();
-SpaceInvaders.c(388): error:  #169: expected a declaration
-        do{
-SpaceInvaders.c(398): warning:  #12-D: parsing restarts here after previous syntax error
-        while(Anyalive);
-SpaceInvaders.c(408): error:  #79: expected a type specifier
-    Delay100ms(50);              // delay 5 sec at 80 MHz
-SpaceInvaders.c(408): error:  #260-D: explicit type is missing ("int" assumed)
-    Delay100ms(50);              // delay 5 sec at 80 MHz
-SpaceInvaders.c(408): error:  #147: declaration is incompatible with "void Delay100ms(uint32_t)" (declared at line 71)
-    Delay100ms(50);              // delay 5 sec at 80 MHz
-SpaceInvaders.c(410): error:  #79: expected a type specifier
-    ST7735_FillScreen(0x0000);            // set screen to black
-SpaceInvaders.c(410): error:  #260-D: explicit type is missing ("int" assumed)
-    ST7735_FillScreen(0x0000);            // set screen to black
-SpaceInvaders.c(410): error:  #147: declaration is incompatible with "void ST7735_FillScreen(uint16_t)" (declared at line 190 of "ST7735.h")
-    ST7735_FillScreen(0x0000);            // set screen to black
-SpaceInvaders.c(411): error:  #79: expected a type specifier
-    ST7735_SetCursor(1, 1);
-SpaceInvaders.c(411): error:  #79: expected a type specifier
-    ST7735_SetCursor(1, 1);
-SpaceInvaders.c(411): error:  #260-D: explicit type is missing ("int" assumed)
-    ST7735_SetCursor(1, 1);
-SpaceInvaders.c(411): error:  #147: declaration is incompatible with "void ST7735_SetCursor(uint32_t, uint32_t)" (declared at line 313 of "ST7735.h")
-    ST7735_SetCursor(1, 1);
-SpaceInvaders.c(412): error:  #79: expected a type specifier
-    ST7735_OutString("GAME OVER");
-SpaceInvaders.c(412): error:  #260-D: explicit type is missing ("int" assumed)
-    ST7735_OutString("GAME OVER");
-SpaceInvaders.c(412): error:  #147: declaration is incompatible with "void ST7735_OutString(char *)" (declared at line 463 of "ST7735.h")
-    ST7735_OutString("GAME OVER");
-SpaceInvaders.c(413): error:  #79: expected a type specifier
-    ST7735_SetCursor(1, 2);
-SpaceInvaders.c(413): error:  #79: expected a type specifier
-    ST7735_SetCursor(1, 2);
-SpaceInvaders.c(413): error:  #260-D: explicit type is missing ("int" assumed)
-    ST7735_SetCursor(1, 2);
-SpaceInvaders.c(414): error:  #79: expected a type specifier
-        ST7735_OutString("Your Score:");
-SpaceInvaders.c(414): error:  #260-D: explicit type is missing ("int" assumed)
-        ST7735_OutString("Your Score:");
-SpaceInvaders.c(415): error:  #79: expected a type specifier
-    ST7735_SetCursor(2, 3);
-SpaceInvaders.c(415): error:  #79: expected a type specifier
-    ST7735_SetCursor(2, 3);
-SpaceInvaders.c(415): error:  #260-D: explicit type is missing ("int" assumed)
-    ST7735_SetCursor(2, 3);
-SpaceInvaders.c(416): error:  #260-D: explicit type is missing ("int" assumed)
-    LCD_OutUDec(score);
-SpaceInvaders.c(416): error:  #92: identifier-list parameters may only be used in a function definition
-    LCD_OutUDec(score);
-SpaceInvaders.c(416): error:  #147: declaration is incompatible with "void LCD_OutUDec(unsigned long)" (declared at line 78)
-    LCD_OutUDec(score);
-SpaceInvaders.c(417): error:  #169: expected a declaration
-    while(1){
-SpaceInvaders.c(444): warning:  #12-D: parsing restarts here after previous syntax error
-  void PortF_Init(void);
-SpaceInvaders.c(449): warning:  #223-D: function "PortF_Init" declared implicitly
-        PortF_Init();
-SpaceInvaders.c(467): error:  #159: declaration is incompatible with previous "PortF_Init" (declared at line 449)
-  void PortF_Init(void){ volatile unsigned long delay;
-SpaceInvaders.c: 7 warnings, 29 errors
-".\SpaceInvaders.axf" - 29 Error(s), 7 Warning(s).
-Target not created
+ers.c...
+compiling ST7735.c...
+compiling PLL.c...
+linking...
+Program Size: Code=5712 RO-data=18244 RW-data=96 ZI-data=1344  
+".\SpaceInvaders.axf" - 0 Error(s), 0 Warning(s).
