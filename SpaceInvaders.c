@@ -84,9 +84,7 @@ void LCD_OutDistance(unsigned long n){
   ST7735_OutString((char *)String);  // output using your function
 }
 
-void PortE_Init(void){ volatile unsigned long delay;
-  SYSCTL_RCGC2_R |= 0x00000010;     // 1) E clock
-  delay = SYSCTL_RCGC2_R;           // delay   
+void PortE_Init(void){ 
 //  GPIO_PORTE_LOCK_R = 0x4C4F434B;   // 2) unlock PortE PE0  
 //  GPIO_PORTE_CR_R = 0x1F;           // allow changes to PE4-0       
   GPIO_PORTE_AMSEL_R &= ~0x03;        // 3) disable analog function
@@ -191,6 +189,7 @@ void GameInit(void){
 	Player.needDraw = 1;
 	Player.life = alive;
 	Player.blank = white;
+	Player.vy =-1;
 	
 	Anyalive = 1;  // Initalize player health (potentially add lives in future update)
 }
@@ -292,6 +291,7 @@ void GameMove(void){
 		ADCdata = ADC0_In();
 		ShipDistance = 111*ADCdata /4096;
 		Player.ox = Player.x; 
+		Player.oy=Player.y;
 		Player.x = ShipDistance;
 		Player.needDraw = 1;
 	} 
@@ -299,19 +299,29 @@ void GameMove(void){
 	
 	
 	// CHECK FOR JUMP/CROUCH
-	long Jumping=5;
-if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x01))
-	{
-		while(Jumping != 0)
-			{
-				Jumping--;
-				Player.y= Player.y +15;
-		}
 	
+if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x01))
+{
+	
+	if(Player.y>159){
+	Player.y = 159;
+	Player.vy=-Player.vy;
+	
+	}
+
+	if(Player.y<100){
+		Player.y =100;
+		Player.vy=-Player.vy;
+		
+	}
+  Player.y += Player.vy;
+				
 }
- if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02)
- {
- }
+
+// if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02)
+// {
+//Player.y= Player.y +100;
+// }
 
 }
 
@@ -353,7 +363,7 @@ void GameDraw(void){
 	// GameDraw for Player Model
 	if(Player.needDraw){
 		if(Player.life == alive){
-			ST7735_DrawBitmap(Player.ox, Player.y, Player.blank, Player.w, Player.h);
+			ST7735_DrawBitmap(Player.ox, Player.oy, Player.blank, Player.w, Player.h);
 			ST7735_DrawBitmap(Player.x, Player.y, Player.image, Player.w, Player.h);
 			
 		}else{
@@ -394,9 +404,11 @@ int main(void){
 	Random_Init(NVIC_ST_CURRENT_R);
   Output_Init();
 	GameInit();
+
 	
 	//Sound_Init();
 	ADC0_Init();
+	PortE_Init();
 	Timer1_Init(&ADC,80000000/40);
 	
 	ST7735_FillScreen(0xFFFF);            // set screen to white
