@@ -302,9 +302,10 @@ void GameMove(void){
 	
 if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x01))
 {
-	Player.w=
-	
-	
+//	Sound_Shoot();
+	Player.w=26;
+	Player.h=27;
+	Player.image=valvano_jumping;
 	
 	if(Player.y>159){
 	Player.y = 159;
@@ -323,7 +324,6 @@ if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)
 
  if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02)
  {
-
  }
 
 }
@@ -409,7 +409,7 @@ int main(void){
 	GameInit();
 
 	
-	//Sound_Init();
+	Sound_Init();
 	ADC0_Init();
 	PortE_Init();
 	Timer1_Init(&ADC,80000000/40);
