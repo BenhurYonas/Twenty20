@@ -1,9 +1,11 @@
-// put prototypes for public functions, explain what it does
-// put your names here, date
+// DAC.h
+// Benhur Yonas and Diondre Dubose
+// November 25, 2020
+// File Header for 6-bit DAC, used in game
 
 
 // **************DAC_Init*********************
-// Initialize 4-bit DAC 
+// Initialize 6-bit DAC 
 // Input: none
 // Output: none
 void DAC_Init(void);
@@ -11,6 +13,6 @@ void DAC_Init(void);
 
 // **************DAC_Out*********************
 // output to DAC
-// Input: 4-bit data, 0 to 15 
+// Input: 6-bit data, 0 to 15 
 // Output: none
 void DAC_Out(unsigned long data);
