@@ -324,8 +324,8 @@ void GameMove(void){
 	}
 
 	if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02){
-		Player.w = 26;
-		Player.h = 19;
+		Player.w = 24;
+		Player.h = 15;
 		Player.image = valvano_squatting;
 		Player.y = 159;
 		
