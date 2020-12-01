@@ -302,6 +302,9 @@ void GameMove(void){
 	
 if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x01))
 {
+	Player.w=
+	
+	
 	
 	if(Player.y>159){
 	Player.y = 159;
@@ -318,10 +321,10 @@ if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)
 				
 }
 
-// if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02)
-// {
-//Player.y= Player.y +100;
-// }
+ if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02)
+ {
+
+ }
 
 }
 
