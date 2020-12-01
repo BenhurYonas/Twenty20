@@ -137,7 +137,8 @@ int Anyalive; 												// semaphore for end of game
 unsigned long ADCdata, ShipDistance; 	// ADC variables used for movement of ship
 unsigned long score = 0;							// Initalizes score to zero (currently not implemented)
 unsigned long random;									// used to grab value from random generator
-int language; 												// flag for choosing correct language 
+int language; 												// flag for choosing correct language
+int jump_flag, duck_flag = 0;							// flag to note if jump is under process
 
 // Random250() generates a random number between 0 and 255
 unsigned long Random250(void){
@@ -295,7 +296,7 @@ void GameMove(void){
 		ADCdata = ADC0_In();
 		ShipDistance = 111*ADCdata /4096;
 		Player.ox = Player.x; 
-		Player.oy=Player.y;
+		Player.oy = Player.y;
 		Player.x = ShipDistance;
 		Player.needDraw = 1;
 	} 
@@ -309,26 +310,53 @@ void GameMove(void){
 		Player.w=26;
 		Player.h=27;
 		Player.image=valvano_jumping;
-	
-		if(Player.y>159){
-			Player.y = 159;
-			Player.vy=-Player.vy;
-		}
+		
+		if(Player.y == 159){
+			Player.vy = -2;
 
-		if(Player.y<100){
-			Player.y =100;
-			Player.vy=-Player.vy;	
 		}
-		Player.y += Player.vy;
+		jump_flag = 1;
+	
+//		if(Player.y>159){
+//			Player.y = 159;
+//			Player.vy = -1;
+//		}
+
+//		if(Player.y < 100){
+//			Player.y = 100;
+//			Player.vy=-Player.vy;	
+//		}
+//		Player.y += Player.vy;
 				
 	}
 
+	if(jump_flag == 1){
+		if(Player.y < 100){
+			Player.vy = 2;
+		}
+		if(Player.y == 161){
+			Player.vy = 0;
+			jump_flag = 0;
+			Player.y = 159;
+			Player.image = valvano;
+			Player.w = 16;
+			Player.h = 20;
+		}
+		Player.y += Player.vy;
+	}
+	
 	if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02){
 		Player.w = 24;
 		Player.h = 15;
 		Player.image = valvano_squatting;
 		Player.y = 159;
-		
+	}else{
+		if(jump_flag == 0){
+			Player.y = 159;
+			Player.image = valvano;
+			Player.w = 16;
+			Player.h = 20;
+		}
 	}
 }
 
@@ -417,19 +445,20 @@ int main(void){
 	Sound_Init();
 	Timer1_Init(&ADC,80000000/40);
 	
-	
-	// FUTURE: Menu screen before initalizing the game
-	// would go around this point; Output_Init would have 
-	// to get called before here to allow display
+
 	ST7735_FillScreen(0xFFFF);            // set screen to white
 	ST7735_SetCursor(4, 4);
 	ST7735_OutString("Twenty20");
 	 
-	ST7735_SetCursor(4, 6);
-	ST7735_OutString("English: Left Button");
-
-	ST7735_SetCursor(4, 7);
-	ST7735_OutString("Espanol: Boton Derecho");
+	ST7735_SetCursor(1, 6);
+	ST7735_OutString("English:");
+	ST7735_SetCursor(1, 7);
+	ST7735_OutString("Left Button");
+	
+	ST7735_SetCursor(1, 8);
+	ST7735_OutString("Espanol:");
+	ST7735_SetCursor(1, 9);
+	ST7735_OutString("Boton Derecho");
 	
 	while((GPIO_PORTE_DATA_R&0x03) == 0){}
 	if((GPIO_PORTE_DATA_R&0x03) == 0x01){
@@ -440,6 +469,17 @@ int main(void){
 		}
 	}
 	
+	
+	ST7735_FillScreen(0xFFFF);            // set screen to white
+	
+	ST7735_SetCursor(1, 5);
+	ST7735_OutString("LB: Jump");
+	ST7735_SetCursor(1, 7);
+	ST7735_OutString("RB: Duck");
+	
+	
+	
+	Delay100ms(20);												// delay 5 sec at 80 MHz
 	
 	ST7735_FillScreen(0xFFFF);            // set screen to white
 	EnableInterrupts();
@@ -457,7 +497,7 @@ int main(void){
 	while(Anyalive);
 
 
-  //Delay100ms(50);              // delay 5 sec at 80 MHz
+  //Delay100ms(50);              				// delay 5 sec at 80 MHz
 
   ST7735_FillScreen(0xFFFF);            // set screen to white
   ST7735_SetCursor(1, 1);
