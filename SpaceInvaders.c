@@ -124,8 +124,6 @@ struct sprite{
 // Create variable based on sprite structure from above
 typedef struct sprite sprite_t;
 
-// Antiquated, used for testing purposes
-//sprite_t Enemy[18]; 
 
 // Four Sprites used in the game
 sprite_t Virus;
@@ -139,6 +137,7 @@ int Anyalive; 												// semaphore for end of game
 unsigned long ADCdata, ShipDistance; 	// ADC variables used for movement of ship
 unsigned long score = 0;							// Initalizes score to zero (currently not implemented)
 unsigned long random;									// used to grab value from random generator
+int language; 												// flag for choosing correct language 
 
 // Random250() generates a random number between 0 and 255
 unsigned long Random250(void){
@@ -257,7 +256,7 @@ void GameMove(void){
 			if(Collision(Player.x, Player.y, Player.w, Player.h, Cure.x, Cure.y, Cure.w, Cure.h) == 1){ // Check for collision, if collided add pt
 				Cure.life = dead;
 				score++;
-				// ADD SOUND HERE
+				// ADD SOUND HERE collecting cure
 			}else{
 				Cure.y += Cure.vy;
 			}
@@ -277,9 +276,14 @@ void GameMove(void){
 		}
 	}else if (Hornet.life == alive){  // moves sprite down one until it reaches the end
 		if(Hornet.x < -15){
-			Hornet.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED]; if collided, dead
+			Hornet.life = dead;					 // Check for collision [NEEDS TO GET IMPLEMENTED]; if collided, dead		
 		}else{
-			Hornet.x += Hornet.vx;
+			if(Collision(Player.x, Player.y, Player.w, Player.h, Hornet.x, Hornet.y, Hornet.w, Hornet.h) == 1){  // Check for collision, If Collided, dead
+				Player.life = dead;
+				Anyalive = 0;
+			}else{
+				Hornet.x += Hornet.vx;	
+			}
 		}
 		Hornet.needDraw = 1;
 	}
@@ -300,32 +304,32 @@ void GameMove(void){
 	
 	// CHECK FOR JUMP/CROUCH
 	
-if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x01))
-{
-//	Sound_Shoot();
-	Player.w=26;
-	Player.h=27;
-	Player.image=valvano_jumping;
+	if((((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x03)||(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x01)){
+		Sound_Shoot();
+		Player.w=26;
+		Player.h=27;
+		Player.image=valvano_jumping;
 	
-	if(Player.y>159){
-	Player.y = 159;
-	Player.vy=-Player.vy;
-	
+		if(Player.y>159){
+			Player.y = 159;
+			Player.vy=-Player.vy;
+		}
+
+		if(Player.y<100){
+			Player.y =100;
+			Player.vy=-Player.vy;	
+		}
+		Player.y += Player.vy;
+				
 	}
 
-	if(Player.y<100){
-		Player.y =100;
-		Player.vy=-Player.vy;
+	if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02){
+		Player.w = 26;
+		Player.h = 19;
+		Player.image = valvano_squatting;
+		Player.y = 159;
 		
 	}
-  Player.y += Player.vy;
-				
-}
-
- if(((GPIO_PORTE_DATA_R)&~0xFFFFFFFC)==0x02)
- {
- }
-
 }
 
 // GameDraw() checks conditions of each sprite and calls ST7735_DrawBitmap() to (re)draw sprites on the LCD
@@ -391,40 +395,58 @@ void ADC(void){ //40 Hz
 
 
 
+// Most Text used in the game
+// string[0] is english
+// string[1] is spanish
+char string_score[2][10] = {"Score:", "Marcar:"};
+char game_over[2][20] = {"GAME OVER", "JUEGO TERMINADO"};
+char your_score[2][20] = {"Your score:","Tu Marcas:"};
+
 
 int main(void){
   DisableInterrupts();
+	
+	// Initalize all of the things needed for the game
 	PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
-  
+  Output_Init();
+	ADC0_Init();
+	PortE_Init();
+	Random_Init(1);
+	SysTickInit();
+	GameInit();
+	Sound_Init();
+	Timer1_Init(&ADC,80000000/40);
+	
+	
 	// FUTURE: Menu screen before initalizing the game
 	// would go around this point; Output_Init would have 
 	// to get called before here to allow display
-	
+	ST7735_FillScreen(0xFFFF);            // set screen to white
+	ST7735_SetCursor(4, 4);
+	ST7735_OutString("Twenty20");
+	 
+	ST7735_SetCursor(4, 6);
+	ST7735_OutString("English: Left Button");
 
+	ST7735_SetCursor(4, 7);
+	ST7735_OutString("Espanol: Boton Derecho");
 	
-	// Initalize all of the things needed for the game
-	SysTickInit();
-	Random_Init(NVIC_ST_CURRENT_R);
-  Output_Init();
-	GameInit();
-
+	while((GPIO_PORTE_DATA_R&0x03) == 0){}
+	if((GPIO_PORTE_DATA_R&0x03) == 0x01){
+		language = 0;
+	}else{
+		if((GPIO_PORTE_DATA_R&0x03) == 0x02){
+			language = 1;
+		}
+	}
 	
-	Sound_Init();
-	ADC0_Init();
-	PortE_Init();
-	Timer1_Init(&ADC,80000000/40);
 	
 	ST7735_FillScreen(0xFFFF);            // set screen to white
-	
-	// antiquated testing
-	//ST7735_DrawBitmap(52, 159, PlayerShip0, 18,8); // player ship middle bottom
-  //ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
-
 	EnableInterrupts();
 	
 	do{
 		ST7735_SetCursor(1, 1);
-		ST7735_OutString("Score:");
+		ST7735_OutString(string_score[language]);
 		ST7735_SetCursor(1, 2);
 		LCD_OutUDec(score);
 		while(moveflag==0){};
@@ -434,21 +456,14 @@ int main(void){
 		}
 	while(Anyalive);
 
-// antiquated testing
-//  ST7735_DrawBitmap(0, 9, SmallEnemy10pointA, 16,10);
-//  ST7735_DrawBitmap(20,9, SmallEnemy10pointB, 16,10);
-//  ST7735_DrawBitmap(40, 9, SmallEnemy20pointA, 16,10);
-//  ST7735_DrawBitmap(60, 9, SmallEnemy20pointB, 16,10);
-//  ST7735_DrawBitmap(80, 9, SmallEnemy30pointA, 16,10);
-//  ST7735_DrawBitmap(100, 9, SmallEnemy30pointB, 16,10);
 
   //Delay100ms(50);              // delay 5 sec at 80 MHz
 
-  ST7735_FillScreen(0x0000);            // set screen to black
+  ST7735_FillScreen(0xFFFF);            // set screen to white
   ST7735_SetCursor(1, 1);
-  ST7735_OutString("GAME OVER");
+	ST7735_OutString(game_over[language]);
   ST7735_SetCursor(1, 2);
-	ST7735_OutString("Your Score:");
+	ST7735_OutString(your_score[language]);
   ST7735_SetCursor(2, 3);
   LCD_OutUDec(score);
   while(1){
