@@ -8,7 +8,7 @@ Section Cross References
     startup.o(HEAP) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
     startup.o(RESET) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
     startup.o(RESET) refers to startup.o(STACK) for StackMem
-    startup.o(RESET) refers to spaceinvaders.o(i.SysTick_Handler) for SysTick_Handler
+    startup.o(RESET) refers to twenty20.o(i.SysTick_Handler) for SysTick_Handler
     startup.o(RESET) refers to timer0.o(i.Timer0A_Handler) for Timer0A_Handler
     startup.o(RESET) refers to timer1.o(i.Timer1A_Handler) for Timer1A_Handler
     startup.o(RESET) refers to __main.o(!!!main) for __main
@@ -32,48 +32,6 @@ Section Cross References
     sound.o(i.Sound_Jump) refers to sound.o(.constdata) for jump
     sound.o(i.Sound_Play) refers to sound.o(.data) for Length
     print.o(.text) refers to print.o(DATA) for String
-    spaceinvaders.o(i.ADC) refers to spaceinvaders.o(.data) for ADCflag
-    spaceinvaders.o(i.GameDraw) refers to st7735.o(i.ST7735_DrawBitmap) for ST7735_DrawBitmap
-    spaceinvaders.o(i.GameDraw) refers to spaceinvaders.o(.bss) for Virus
-    spaceinvaders.o(i.GameDraw) refers to spaceinvaders.o(.data) for lives
-    spaceinvaders.o(i.GameInit) refers to spaceinvaders.o(.data) for moveflag
-    spaceinvaders.o(i.GameInit) refers to spaceinvaders.o(.bss) for Virus
-    spaceinvaders.o(i.GameInit) refers to spaceinvaders.o(.constdata) for COVID_model
-    spaceinvaders.o(i.GameMove) refers to spaceinvaders.o(i.Random250) for Random250
-    spaceinvaders.o(i.GameMove) refers to spaceinvaders.o(i.Collision) for Collision
-    spaceinvaders.o(i.GameMove) refers to sound.o(i.Sound_Collected) for Sound_Collected
-    spaceinvaders.o(i.GameMove) refers to adc.o(i.ADC0_In) for ADC0_In
-    spaceinvaders.o(i.GameMove) refers to sound.o(i.Sound_Jump) for Sound_Jump
-    spaceinvaders.o(i.GameMove) refers to spaceinvaders.o(.bss) for Virus
-    spaceinvaders.o(i.GameMove) refers to spaceinvaders.o(.data) for random
-    spaceinvaders.o(i.GameMove) refers to spaceinvaders.o(.constdata) for valvano_jumping
-    spaceinvaders.o(i.LCD_OutDistance) refers to print.o(.text) for ConvertDistance
-    spaceinvaders.o(i.LCD_OutDistance) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
-    spaceinvaders.o(i.LCD_OutDistance) refers to print.o(DATA) for String
-    spaceinvaders.o(i.LCD_OutUDec) refers to print.o(.text) for ConvertUDec
-    spaceinvaders.o(i.LCD_OutUDec) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
-    spaceinvaders.o(i.LCD_OutUDec) refers to print.o(DATA) for String
-    spaceinvaders.o(i.Random250) refers to random.o(.text) for Random
-    spaceinvaders.o(i.SysTick_Handler) refers to spaceinvaders.o(i.GameMove) for GameMove
-    spaceinvaders.o(i.SysTick_Handler) refers to spaceinvaders.o(.data) for moveflag
-    spaceinvaders.o(i.main) refers to startup.o(.text) for DisableInterrupts
-    spaceinvaders.o(i.main) refers to pll.o(i.PLL_Init) for PLL_Init
-    spaceinvaders.o(i.main) refers to st7735.o(i.Output_Init) for Output_Init
-    spaceinvaders.o(i.main) refers to adc.o(i.ADC0_Init) for ADC0_Init
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(i.PortE_Init) for PortE_Init
-    spaceinvaders.o(i.main) refers to random.o(.text) for Random_Init
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(i.SysTickInit) for SysTickInit
-    spaceinvaders.o(i.main) refers to sound.o(i.Sound_Init) for Sound_Init
-    spaceinvaders.o(i.main) refers to timer1.o(i.Timer1_Init) for Timer1_Init
-    spaceinvaders.o(i.main) refers to st7735.o(i.ST7735_FillScreen) for ST7735_FillScreen
-    spaceinvaders.o(i.main) refers to st7735.o(i.ST7735_SetCursor) for ST7735_SetCursor
-    spaceinvaders.o(i.main) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(i.GameInit) for GameInit
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(i.Delay100ms) for Delay100ms
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(i.LCD_OutUDec) for LCD_OutUDec
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(i.GameDraw) for GameDraw
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(i.ADC) for ADC
-    spaceinvaders.o(i.main) refers to spaceinvaders.o(.data) for language
     st7735.o(i.Output_Clear) refers to st7735.o(i.ST7735_FillScreen) for ST7735_FillScreen
     st7735.o(i.Output_Color) refers to st7735.o(i.ST7735_SetTextColor) for ST7735_SetTextColor
     st7735.o(i.Output_Init) refers to st7735.o(i.ST7735_InitR) for ST7735_InitR
@@ -175,6 +133,48 @@ Section Cross References
     st7735.o(i.setAddrWindow) refers to st7735.o(i.writecommand) for writecommand
     st7735.o(i.setAddrWindow) refers to st7735.o(i.writedata) for writedata
     st7735.o(i.setAddrWindow) refers to st7735.o(.data) for ColStart
+    twenty20.o(i.ADC) refers to twenty20.o(.data) for ADCflag
+    twenty20.o(i.GameDraw) refers to st7735.o(i.ST7735_DrawBitmap) for ST7735_DrawBitmap
+    twenty20.o(i.GameDraw) refers to twenty20.o(.bss) for Virus
+    twenty20.o(i.GameDraw) refers to twenty20.o(.data) for lives
+    twenty20.o(i.GameInit) refers to twenty20.o(.data) for moveflag
+    twenty20.o(i.GameInit) refers to twenty20.o(.bss) for Virus
+    twenty20.o(i.GameInit) refers to twenty20.o(.constdata) for COVID_model
+    twenty20.o(i.GameMove) refers to twenty20.o(i.Random250) for Random250
+    twenty20.o(i.GameMove) refers to twenty20.o(i.Collision) for Collision
+    twenty20.o(i.GameMove) refers to sound.o(i.Sound_Collected) for Sound_Collected
+    twenty20.o(i.GameMove) refers to adc.o(i.ADC0_In) for ADC0_In
+    twenty20.o(i.GameMove) refers to sound.o(i.Sound_Jump) for Sound_Jump
+    twenty20.o(i.GameMove) refers to twenty20.o(.bss) for Virus
+    twenty20.o(i.GameMove) refers to twenty20.o(.data) for random
+    twenty20.o(i.GameMove) refers to twenty20.o(.constdata) for valvano_jumping
+    twenty20.o(i.LCD_OutDistance) refers to print.o(.text) for ConvertDistance
+    twenty20.o(i.LCD_OutDistance) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
+    twenty20.o(i.LCD_OutDistance) refers to print.o(DATA) for String
+    twenty20.o(i.LCD_OutUDec) refers to print.o(.text) for ConvertUDec
+    twenty20.o(i.LCD_OutUDec) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
+    twenty20.o(i.LCD_OutUDec) refers to print.o(DATA) for String
+    twenty20.o(i.Random250) refers to random.o(.text) for Random
+    twenty20.o(i.SysTick_Handler) refers to twenty20.o(i.GameMove) for GameMove
+    twenty20.o(i.SysTick_Handler) refers to twenty20.o(.data) for moveflag
+    twenty20.o(i.main) refers to startup.o(.text) for DisableInterrupts
+    twenty20.o(i.main) refers to pll.o(i.PLL_Init) for PLL_Init
+    twenty20.o(i.main) refers to st7735.o(i.Output_Init) for Output_Init
+    twenty20.o(i.main) refers to adc.o(i.ADC0_Init) for ADC0_Init
+    twenty20.o(i.main) refers to twenty20.o(i.PortE_Init) for PortE_Init
+    twenty20.o(i.main) refers to random.o(.text) for Random_Init
+    twenty20.o(i.main) refers to twenty20.o(i.SysTickInit) for SysTickInit
+    twenty20.o(i.main) refers to sound.o(i.Sound_Init) for Sound_Init
+    twenty20.o(i.main) refers to timer1.o(i.Timer1_Init) for Timer1_Init
+    twenty20.o(i.main) refers to st7735.o(i.ST7735_FillScreen) for ST7735_FillScreen
+    twenty20.o(i.main) refers to st7735.o(i.ST7735_SetCursor) for ST7735_SetCursor
+    twenty20.o(i.main) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
+    twenty20.o(i.main) refers to twenty20.o(i.GameInit) for GameInit
+    twenty20.o(i.main) refers to twenty20.o(i.Delay100ms) for Delay100ms
+    twenty20.o(i.main) refers to twenty20.o(i.LCD_OutUDec) for LCD_OutUDec
+    twenty20.o(i.main) refers to twenty20.o(i.GameDraw) for GameDraw
+    twenty20.o(i.main) refers to twenty20.o(i.ADC) for ADC
+    twenty20.o(i.main) refers to twenty20.o(.data) for language
     __main.o(!!!main) refers to rtentry.o(.ARM.Collect$$rtentry$$00000000) for __rt_entry
     rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to rtentry2.o(.ARM.Collect$$rtentry$$0000000A) for __rt_entry_li
     rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to rtentry2.o(.ARM.Collect$$rtentry$$0000000D) for __rt_entry_main
@@ -185,7 +185,7 @@ Section Cross References
     rtentry2.o(.ARM.Collect$$rtentry$$00000008) refers to boardinit2.o(.text) for _platform_post_stackheap_init
     rtentry2.o(.ARM.Collect$$rtentry$$0000000A) refers to libinit.o(.ARM.Collect$$libinit$$00000000) for __rt_lib_init
     rtentry2.o(.ARM.Collect$$rtentry$$0000000B) refers to boardinit3.o(.text) for _platform_post_lib_init
-    rtentry2.o(.ARM.Collect$$rtentry$$0000000D) refers to spaceinvaders.o(i.main) for main
+    rtentry2.o(.ARM.Collect$$rtentry$$0000000D) refers to twenty20.o(i.main) for main
     rtentry2.o(.ARM.Collect$$rtentry$$0000000D) refers to exit.o(.text) for exit
     rtentry2.o(.ARM.exidx) refers to rtentry2.o(.ARM.Collect$$rtentry$$00000001) for .ARM.Collect$$rtentry$$00000001
     rtentry2.o(.ARM.exidx) refers to rtentry2.o(.ARM.Collect$$rtentry$$00000008) for .ARM.Collect$$rtentry$$00000008
@@ -277,8 +277,6 @@ Section Cross References
 
 Removing Unused input sections from the image.
 
-    Removing sound.o(i.Sound_Explosion), (2 bytes).
-    Removing spaceinvaders.o(i.LCD_OutDistance), (24 bytes).
     Removing st7735.o(i.Output_Clear), (10 bytes).
     Removing st7735.o(i.Output_Color), (12 bytes).
     Removing st7735.o(i.Output_Off), (8 bytes).
@@ -309,8 +307,9 @@ Removing Unused input sections from the image.
     Removing st7735.o(i.fillmessage), (72 bytes).
     Removing st7735.o(i.fputc), (16 bytes).
     Removing st7735.o(.bss), (12 bytes).
+    Removing twenty20.o(i.LCD_OutDistance), (24 bytes).
 
-32 unused section(s) (total 2458 bytes) removed from the image.
+31 unused section(s) (total 2456 bytes) removed from the image.
 
 ==============================================================================
 
@@ -323,8 +322,8 @@ Image Symbol Table
     RESET                                    0x00000000   Section      644  startup.o(RESET)
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit3.o ABSOLUTE
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit1.o ABSOLUTE
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/dczerorl2.s                0x00000000   Number         0  __dczerorl2.o ABSOLUTE
     ../clib/angel/handlers.s                 0x00000000   Number         0  __scatter_zi.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
@@ -343,15 +342,16 @@ Image Symbol Table
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_exit.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_wrch.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
-    ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  no_argv.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  _get_argv_nomalloc.o ABSOLUTE
+    ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hrguard.o ABSOLUTE
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libshutdown2.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libinit2.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
@@ -365,7 +365,6 @@ Image Symbol Table
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
     ../clib/signal.s                         0x00000000   Number         0  defsig.o ABSOLUTE
     ../clib/stdlib.c                         0x00000000   Number         0  exit.o ABSOLUTE
     ../fplib/fpinit.s                        0x00000000   Number         0  fpinit.o ABSOLUTE
@@ -375,9 +374,9 @@ Image Symbol Table
     Print.s                                  0x00000000   Number         0  print.o ABSOLUTE
     ST7735.c                                 0x00000000   Number         0  st7735.o ABSOLUTE
     Sound.c                                  0x00000000   Number         0  sound.o ABSOLUTE
-    SpaceInvaders.c                          0x00000000   Number         0  spaceinvaders.o ABSOLUTE
     Timer0.c                                 0x00000000   Number         0  timer0.o ABSOLUTE
     Timer1.c                                 0x00000000   Number         0  timer1.o ABSOLUTE
+    Twenty20.c                               0x00000000   Number         0  twenty20.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     random.s                                 0x00000000   Number         0  random.o ABSOLUTE
     startup.s                                0x00000000   Number         0  startup.o ABSOLUTE
@@ -434,22 +433,22 @@ Image Symbol Table
     .text                                    0x0000067c   Section        0  sys_exit.o(.text)
     .text                                    0x00000688   Section        2  use_no_semi.o(.text)
     .text                                    0x0000068a   Section        0  indicate_semi.o(.text)
-    i.ADC                                    0x0000068c   Section        0  spaceinvaders.o(i.ADC)
+    i.ADC                                    0x0000068c   Section        0  twenty20.o(i.ADC)
     i.ADC0_In                                0x00000698   Section        0  adc.o(i.ADC0_In)
     i.ADC0_Init                              0x000006c4   Section        0  adc.o(i.ADC0_Init)
-    i.Collision                              0x000007b0   Section        0  spaceinvaders.o(i.Collision)
+    i.Collision                              0x000007b0   Section        0  twenty20.o(i.Collision)
     i.DAC_Init                               0x000007e0   Section        0  dac.o(i.DAC_Init)
     i.DAC_Out                                0x00000840   Section        0  dac.o(i.DAC_Out)
-    i.Delay100ms                             0x0000084c   Section        0  spaceinvaders.o(i.Delay100ms)
+    i.Delay100ms                             0x0000084c   Section        0  twenty20.o(i.Delay100ms)
     i.Delay1ms                               0x00000870   Section        0  st7735.o(i.Delay1ms)
-    i.GameDraw                               0x00000890   Section        0  spaceinvaders.o(i.GameDraw)
-    i.GameInit                               0x00000a10   Section        0  spaceinvaders.o(i.GameInit)
-    i.GameMove                               0x00000ae8   Section        0  spaceinvaders.o(i.GameMove)
-    i.LCD_OutUDec                            0x00000e18   Section        0  spaceinvaders.o(i.LCD_OutUDec)
+    i.GameDraw                               0x00000890   Section        0  twenty20.o(i.GameDraw)
+    i.GameInit                               0x00000a10   Section        0  twenty20.o(i.GameInit)
+    i.GameMove                               0x00000ae8   Section        0  twenty20.o(i.GameMove)
+    i.LCD_OutUDec                            0x00000e18   Section        0  twenty20.o(i.LCD_OutUDec)
     i.Output_Init                            0x00000e30   Section        0  st7735.o(i.Output_Init)
     i.PLL_Init                               0x00000e40   Section        0  pll.o(i.PLL_Init)
-    i.PortE_Init                             0x00000ebc   Section        0  spaceinvaders.o(i.PortE_Init)
-    i.Random250                              0x00000f0c   Section        0  spaceinvaders.o(i.Random250)
+    i.PortE_Init                             0x00000ebc   Section        0  twenty20.o(i.PortE_Init)
+    i.Random250                              0x00000f0c   Section        0  twenty20.o(i.Random250)
     i.ST7735_DrawBitmap                      0x00000f14   Section        0  st7735.o(i.ST7735_DrawBitmap)
     i.ST7735_DrawCharS                       0x00001034   Section        0  st7735.o(i.ST7735_DrawCharS)
     i.ST7735_DrawPixel                       0x00001128   Section        0  st7735.o(i.ST7735_DrawPixel)
@@ -465,8 +464,8 @@ Image Symbol Table
     i.Sound_Init                             0x0000147c   Section        0  sound.o(i.Sound_Init)
     i.Sound_Jump                             0x0000149c   Section        0  sound.o(i.Sound_Jump)
     i.Sound_Play                             0x000014b0   Section        0  sound.o(i.Sound_Play)
-    i.SysTickInit                            0x000014d0   Section        0  spaceinvaders.o(i.SysTickInit)
-    i.SysTick_Handler                        0x000014e8   Section        0  spaceinvaders.o(i.SysTick_Handler)
+    i.SysTickInit                            0x000014d0   Section        0  twenty20.o(i.SysTickInit)
+    i.SysTick_Handler                        0x000014e8   Section        0  twenty20.o(i.SysTick_Handler)
     i.Timer0A_Handler                        0x000014fc   Section        0  timer0.o(i.Timer0A_Handler)
     i.Timer0_Init                            0x00001514   Section        0  timer0.o(i.Timer0_Init)
     i.Timer1A_Handler                        0x00001574   Section        0  timer1.o(i.Timer1A_Handler)
@@ -475,7 +474,7 @@ Image Symbol Table
     commandList                              0x000015ed   Thumb Code    86  st7735.o(i.commandList)
     i.commonInit                             0x00001644   Section        0  st7735.o(i.commonInit)
     commonInit                               0x00001645   Thumb Code   340  st7735.o(i.commonInit)
-    i.main                                   0x000017c8   Section        0  spaceinvaders.o(i.main)
+    i.main                                   0x000017c8   Section        0  twenty20.o(i.main)
     i.pushColor                              0x00001a24   Section        0  st7735.o(i.pushColor)
     pushColor                                0x00001a25   Thumb Code    18  st7735.o(i.pushColor)
     i.setAddrWindow                          0x00001a38   Section        0  st7735.o(i.setAddrWindow)
@@ -485,29 +484,29 @@ Image Symbol Table
     i.writedata                              0x00001ae4   Section        0  st7735.o(i.writedata)
     writedata                                0x00001ae5   Thumb Code    24  st7735.o(i.writedata)
     .constdata                               0x00001b04   Section     7858  sound.o(.constdata)
-    .constdata                               0x000039b6   Section    13060  spaceinvaders.o(.constdata)
-    .constdata                               0x00006cba   Section     2114  st7735.o(.constdata)
-    Font                                     0x00006cba   Data        1275  st7735.o(.constdata)
-    Bcmd                                     0x000071b5   Data         103  st7735.o(.constdata)
-    Rcmd1                                    0x0000721c   Data          59  st7735.o(.constdata)
-    Rcmd2green                               0x00007257   Data          13  st7735.o(.constdata)
-    Rcmd2red                                 0x00007264   Data          13  st7735.o(.constdata)
-    Rcmd3                                    0x00007271   Data          43  st7735.o(.constdata)
+    .constdata                               0x000039b6   Section     2114  st7735.o(.constdata)
+    Font                                     0x000039b6   Data        1275  st7735.o(.constdata)
+    Bcmd                                     0x00003eb1   Data         103  st7735.o(.constdata)
+    Rcmd1                                    0x00003f18   Data          59  st7735.o(.constdata)
+    Rcmd2green                               0x00003f53   Data          13  st7735.o(.constdata)
+    Rcmd2red                                 0x00003f60   Data          13  st7735.o(.constdata)
+    Rcmd3                                    0x00003f6d   Data          43  st7735.o(.constdata)
+    .constdata                               0x000041f8   Section    13060  twenty20.o(.constdata)
     .data                                    0x20000000   Section        4  timer0.o(.data)
     .data                                    0x20000004   Section        4  timer1.o(.data)
     .data                                    0x20000008   Section        8  sound.o(.data)
-    .data                                    0x20000010   Section      312  spaceinvaders.o(.data)
-    .data                                    0x20000148   Section       44  st7735.o(.data)
-    _width                                   0x20000152   Data           2  st7735.o(.data)
-    _height                                  0x20000154   Data           2  st7735.o(.data)
-    ColStart                                 0x2000015c   Data           1  st7735.o(.data)
-    RowStart                                 0x2000015d   Data           1  st7735.o(.data)
-    Rotation                                 0x2000015e   Data           1  st7735.o(.data)
-    TabColor                                 0x2000015f   Data           1  st7735.o(.data)
+    .data                                    0x20000010   Section       44  st7735.o(.data)
+    _width                                   0x2000001a   Data           2  st7735.o(.data)
+    _height                                  0x2000001c   Data           2  st7735.o(.data)
+    ColStart                                 0x20000024   Data           1  st7735.o(.data)
+    RowStart                                 0x20000025   Data           1  st7735.o(.data)
+    Rotation                                 0x20000026   Data           1  st7735.o(.data)
+    TabColor                                 0x20000027   Data           1  st7735.o(.data)
+    .data                                    0x2000003c   Section      312  twenty20.o(.data)
     DATA                                     0x20000174   Section        4  random.o(DATA)
     M                                        0x20000174   Data           4  random.o(DATA)
     DATA                                     0x20000178   Section       12  print.o(DATA)
-    .bss                                     0x20000184   Section      224  spaceinvaders.o(.bss)
+    .bss                                     0x20000184   Section      224  twenty20.o(.bss)
     .bss                                     0x20000264   Section       96  libspace.o(.bss)
     HEAP                                     0x200002c8   Section        0  startup.o(HEAP)
     STACK                                    0x200002c8   Section     1024  startup.o(STACK)
@@ -519,7 +518,7 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     BuildAttributes$$THM_ISAv4$E$P$D$K$B$S$7EM$PE$A:L22UL41UL21$X:L11$S22US41US21$IEEE1$IW$USESV6$~STKCKD$USESV7$~SHL$OSPACE$ROPI$EBA8$UX$STANDARDLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
-    __ARM_use_no_argv                        0x00000000   Number         0  spaceinvaders.o ABSOLUTE
+    __ARM_use_no_argv                        0x00000000   Number         0  twenty20.o ABSOLUTE
     __Vectors                                0x00000000   Data           0  startup.o(RESET)
     __ARM_exceptions_init                     - Undefined Weak Reference
     __alloca_initialize                       - Undefined Weak Reference
@@ -739,22 +738,22 @@ Image Symbol Table
     __I$use$semihosting                      0x00000689   Thumb Code     0  use_no_semi.o(.text)
     __use_no_semihosting_swi                 0x00000689   Thumb Code     2  use_no_semi.o(.text)
     __semihosting_library_function           0x0000068b   Thumb Code     0  indicate_semi.o(.text)
-    ADC                                      0x0000068d   Thumb Code     8  spaceinvaders.o(i.ADC)
+    ADC                                      0x0000068d   Thumb Code     8  twenty20.o(i.ADC)
     ADC0_In                                  0x00000699   Thumb Code    36  adc.o(i.ADC0_In)
     ADC0_Init                                0x000006c5   Thumb Code   206  adc.o(i.ADC0_Init)
-    Collision                                0x000007b1   Thumb Code    46  spaceinvaders.o(i.Collision)
+    Collision                                0x000007b1   Thumb Code    46  twenty20.o(i.Collision)
     DAC_Init                                 0x000007e1   Thumb Code    82  dac.o(i.DAC_Init)
     DAC_Out                                  0x00000841   Thumb Code     6  dac.o(i.DAC_Out)
-    Delay100ms                               0x0000084d   Thumb Code    30  spaceinvaders.o(i.Delay100ms)
+    Delay100ms                               0x0000084d   Thumb Code    30  twenty20.o(i.Delay100ms)
     Delay1ms                                 0x00000871   Thumb Code    32  st7735.o(i.Delay1ms)
-    GameDraw                                 0x00000891   Thumb Code   362  spaceinvaders.o(i.GameDraw)
-    GameInit                                 0x00000a11   Thumb Code   158  spaceinvaders.o(i.GameInit)
-    GameMove                                 0x00000ae9   Thumb Code   754  spaceinvaders.o(i.GameMove)
-    LCD_OutUDec                              0x00000e19   Thumb Code    18  spaceinvaders.o(i.LCD_OutUDec)
+    GameDraw                                 0x00000891   Thumb Code   362  twenty20.o(i.GameDraw)
+    GameInit                                 0x00000a11   Thumb Code   158  twenty20.o(i.GameInit)
+    GameMove                                 0x00000ae9   Thumb Code   754  twenty20.o(i.GameMove)
+    LCD_OutUDec                              0x00000e19   Thumb Code    18  twenty20.o(i.LCD_OutUDec)
     Output_Init                              0x00000e31   Thumb Code    16  st7735.o(i.Output_Init)
     PLL_Init                                 0x00000e41   Thumb Code   118  pll.o(i.PLL_Init)
-    PortE_Init                               0x00000ebd   Thumb Code    70  spaceinvaders.o(i.PortE_Init)
-    Random250                                0x00000f0d   Thumb Code     8  spaceinvaders.o(i.Random250)
+    PortE_Init                               0x00000ebd   Thumb Code    70  twenty20.o(i.PortE_Init)
+    Random250                                0x00000f0d   Thumb Code     8  twenty20.o(i.Random250)
     ST7735_DrawBitmap                        0x00000f15   Thumb Code   280  st7735.o(i.ST7735_DrawBitmap)
     ST7735_DrawCharS                         0x00001035   Thumb Code   232  st7735.o(i.ST7735_DrawCharS)
     ST7735_DrawPixel                         0x00001129   Thumb Code    64  st7735.o(i.ST7735_DrawPixel)
@@ -770,62 +769,62 @@ Image Symbol Table
     Sound_Init                               0x0000147d   Thumb Code    24  sound.o(i.Sound_Init)
     Sound_Jump                               0x0000149d   Thumb Code    14  sound.o(i.Sound_Jump)
     Sound_Play                               0x000014b1   Thumb Code    18  sound.o(i.Sound_Play)
-    SysTickInit                              0x000014d1   Thumb Code    20  spaceinvaders.o(i.SysTickInit)
-    SysTick_Handler                          0x000014e9   Thumb Code    14  spaceinvaders.o(i.SysTick_Handler)
+    SysTickInit                              0x000014d1   Thumb Code    20  twenty20.o(i.SysTickInit)
+    SysTick_Handler                          0x000014e9   Thumb Code    14  twenty20.o(i.SysTick_Handler)
     Timer0A_Handler                          0x000014fd   Thumb Code    16  timer0.o(i.Timer0A_Handler)
     Timer0_Init                              0x00001515   Thumb Code    76  timer0.o(i.Timer0_Init)
     Timer1A_Handler                          0x00001575   Thumb Code    16  timer1.o(i.Timer1A_Handler)
     Timer1_Init                              0x0000158d   Thumb Code    76  timer1.o(i.Timer1_Init)
-    main                                     0x000017c9   Thumb Code   482  spaceinvaders.o(i.main)
+    main                                     0x000017c9   Thumb Code   482  twenty20.o(i.main)
     collected                                0x00001b04   Data        4973  sound.o(.constdata)
     jump                                     0x00002e71   Data        2885  sound.o(.constdata)
-    white                                    0x000039b6   Data        7200  spaceinvaders.o(.constdata)
-    COVID_model                              0x000055d6   Data        2376  spaceinvaders.o(.constdata)
-    hornet                                   0x00005f1e   Data         360  spaceinvaders.o(.constdata)
-    test_tube                                0x00006086   Data         360  spaceinvaders.o(.constdata)
-    valvano                                  0x000061ee   Data         640  spaceinvaders.o(.constdata)
-    valvano_jumping                          0x0000646e   Data        1404  spaceinvaders.o(.constdata)
-    valvano_squatting                        0x000069ea   Data         720  spaceinvaders.o(.constdata)
-    smallCircle                              0x0000729c   Data          36  st7735.o(.constdata)
-    circle                                   0x000072c0   Data          60  st7735.o(.constdata)
-    dBfs                                     0x000072fc   Data         512  st7735.o(.constdata)
+    smallCircle                              0x00003f98   Data          36  st7735.o(.constdata)
+    circle                                   0x00003fbc   Data          60  st7735.o(.constdata)
+    dBfs                                     0x00003ff8   Data         512  st7735.o(.constdata)
+    white                                    0x000041f8   Data        7200  twenty20.o(.constdata)
+    COVID_model                              0x00005e18   Data        2376  twenty20.o(.constdata)
+    hornet                                   0x00006760   Data         360  twenty20.o(.constdata)
+    test_tube                                0x000068c8   Data         360  twenty20.o(.constdata)
+    valvano                                  0x00006a30   Data         640  twenty20.o(.constdata)
+    valvano_jumping                          0x00006cb0   Data        1404  twenty20.o(.constdata)
+    valvano_squatting                        0x0000722c   Data         720  twenty20.o(.constdata)
     Region$$Table$$Base                      0x000074fc   Number         0  anon$$obj.o(Region$$Table)
     Region$$Table$$Limit                     0x0000751c   Number         0  anon$$obj.o(Region$$Table)
     PeriodicTask0                            0x20000000   Data           4  timer0.o(.data)
     PeriodicTask1                            0x20000004   Data           4  timer1.o(.data)
     Length                                   0x20000008   Data           4  sound.o(.data)
     SoundPt                                  0x2000000c   Data           4  sound.o(.data)
-    score                                    0x20000010   Data           4  spaceinvaders.o(.data)
-    duck_flag                                0x20000014   Data           4  spaceinvaders.o(.data)
-    string_jump                              0x20000018   Data          40  spaceinvaders.o(.data)
-    string_duck                              0x20000040   Data          40  spaceinvaders.o(.data)
-    string_score                             0x20000068   Data          20  spaceinvaders.o(.data)
-    game_over                                0x2000007c   Data          40  spaceinvaders.o(.data)
-    your_score                               0x200000a4   Data          40  spaceinvaders.o(.data)
-    play_again                               0x200000cc   Data          40  spaceinvaders.o(.data)
-    pushbutton                               0x200000f4   Data          50  spaceinvaders.o(.data)
-    moveflag                                 0x20000128   Data           4  spaceinvaders.o(.data)
-    ADCflag                                  0x2000012c   Data           4  spaceinvaders.o(.data)
-    lives                                    0x20000130   Data           4  spaceinvaders.o(.data)
-    ADCdata                                  0x20000134   Data           4  spaceinvaders.o(.data)
-    ShipDistance                             0x20000138   Data           4  spaceinvaders.o(.data)
-    random                                   0x2000013c   Data           4  spaceinvaders.o(.data)
-    language                                 0x20000140   Data           4  spaceinvaders.o(.data)
-    jump_flag                                0x20000144   Data           4  spaceinvaders.o(.data)
-    StX                                      0x20000148   Data           4  st7735.o(.data)
-    StY                                      0x2000014c   Data           4  st7735.o(.data)
-    StTextColor                              0x20000150   Data           2  st7735.o(.data)
-    lastj                                    0x20000158   Data           4  st7735.o(.data)
-    Messageindex                             0x20000160   Data           4  st7735.o(.data)
-    Ymax                                     0x20000164   Data           4  st7735.o(.data)
-    Ymin                                     0x20000168   Data           4  st7735.o(.data)
-    X                                        0x2000016c   Data           4  st7735.o(.data)
-    Yrange                                   0x20000170   Data           4  st7735.o(.data)
+    StX                                      0x20000010   Data           4  st7735.o(.data)
+    StY                                      0x20000014   Data           4  st7735.o(.data)
+    StTextColor                              0x20000018   Data           2  st7735.o(.data)
+    lastj                                    0x20000020   Data           4  st7735.o(.data)
+    Messageindex                             0x20000028   Data           4  st7735.o(.data)
+    Ymax                                     0x2000002c   Data           4  st7735.o(.data)
+    Ymin                                     0x20000030   Data           4  st7735.o(.data)
+    X                                        0x20000034   Data           4  st7735.o(.data)
+    Yrange                                   0x20000038   Data           4  st7735.o(.data)
+    score                                    0x2000003c   Data           4  twenty20.o(.data)
+    duck_flag                                0x20000040   Data           4  twenty20.o(.data)
+    string_jump                              0x20000044   Data          40  twenty20.o(.data)
+    string_duck                              0x2000006c   Data          40  twenty20.o(.data)
+    string_score                             0x20000094   Data          20  twenty20.o(.data)
+    game_over                                0x200000a8   Data          40  twenty20.o(.data)
+    your_score                               0x200000d0   Data          40  twenty20.o(.data)
+    play_again                               0x200000f8   Data          40  twenty20.o(.data)
+    pushbutton                               0x20000120   Data          50  twenty20.o(.data)
+    moveflag                                 0x20000154   Data           4  twenty20.o(.data)
+    ADCflag                                  0x20000158   Data           4  twenty20.o(.data)
+    lives                                    0x2000015c   Data           4  twenty20.o(.data)
+    ADCdata                                  0x20000160   Data           4  twenty20.o(.data)
+    ShipDistance                             0x20000164   Data           4  twenty20.o(.data)
+    random                                   0x20000168   Data           4  twenty20.o(.data)
+    language                                 0x2000016c   Data           4  twenty20.o(.data)
+    jump_flag                                0x20000170   Data           4  twenty20.o(.data)
     String                                   0x20000178   Data          12  print.o(DATA)
-    Virus                                    0x20000184   Data          56  spaceinvaders.o(.bss)
-    Player                                   0x200001bc   Data          56  spaceinvaders.o(.bss)
-    Cure                                     0x200001f4   Data          56  spaceinvaders.o(.bss)
-    Hornet                                   0x2000022c   Data          56  spaceinvaders.o(.bss)
+    Virus                                    0x20000184   Data          56  twenty20.o(.bss)
+    Player                                   0x200001bc   Data          56  twenty20.o(.bss)
+    Cure                                     0x200001f4   Data          56  twenty20.o(.bss)
+    Hornet                                   0x2000022c   Data          56  twenty20.o(.bss)
     __libspace_start                         0x20000264   Data          96  libspace.o(.bss)
     __temporary_stack_top$libspace           0x200002c4   Data           0  libspace.o(.bss)
 
@@ -844,114 +843,114 @@ Memory Map of the image
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000008   Code   RO          562  * !!!main             c_w.l(__main.o)
-    0x0000028c   0x00000034   Code   RO          718    !!!scatter          c_w.l(__scatter.o)
-    0x000002c0   0x0000005a   Code   RO          716    !!dczerorl2         c_w.l(__dczerorl2.o)
+    0x00000284   0x00000008   Code   RO          556  * !!!main             c_w.l(__main.o)
+    0x0000028c   0x00000034   Code   RO          712    !!!scatter          c_w.l(__scatter.o)
+    0x000002c0   0x0000005a   Code   RO          710    !!dczerorl2         c_w.l(__dczerorl2.o)
     0x0000031a   0x00000002   PAD
-    0x0000031c   0x0000001c   Code   RO          720    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x00000338   0x00000002   Code   RO          589    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x0000033a   0x00000000   Code   RO          596    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          599    .ARM.Collect$$libinit$$00000008  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          601    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          603    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          606    .ARM.Collect$$libinit$$0000000F  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          608    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          610    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          612    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          614    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          616    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          618    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          620    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          622    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          624    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          626    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          630    .ARM.Collect$$libinit$$0000002A  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          632    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          634    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x0000033a   0x00000000   Code   RO          636    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x0000033a   0x00000002   Code   RO          637    .ARM.Collect$$libinit$$00000031  c_w.l(libinit2.o)
-    0x0000033c   0x00000002   Code   RO          657    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x0000033e   0x00000000   Code   RO          671    .ARM.Collect$$libshutdown$$00000003  c_w.l(libshutdown2.o)
-    0x0000033e   0x00000000   Code   RO          674    .ARM.Collect$$libshutdown$$00000006  c_w.l(libshutdown2.o)
-    0x0000033e   0x00000000   Code   RO          677    .ARM.Collect$$libshutdown$$00000009  c_w.l(libshutdown2.o)
-    0x0000033e   0x00000000   Code   RO          679    .ARM.Collect$$libshutdown$$0000000B  c_w.l(libshutdown2.o)
-    0x0000033e   0x00000000   Code   RO          682    .ARM.Collect$$libshutdown$$0000000E  c_w.l(libshutdown2.o)
-    0x0000033e   0x00000002   Code   RO          683    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
-    0x00000340   0x00000000   Code   RO          564    .ARM.Collect$$rtentry$$00000000  c_w.l(rtentry.o)
-    0x00000340   0x00000000   Code   RO          566    .ARM.Collect$$rtentry$$00000002  c_w.l(rtentry2.o)
-    0x00000340   0x00000006   Code   RO          578    .ARM.Collect$$rtentry$$00000004  c_w.l(rtentry4.o)
-    0x00000346   0x00000000   Code   RO          568    .ARM.Collect$$rtentry$$00000009  c_w.l(rtentry2.o)
-    0x00000346   0x00000004   Code   RO          569    .ARM.Collect$$rtentry$$0000000A  c_w.l(rtentry2.o)
-    0x0000034a   0x00000000   Code   RO          571    .ARM.Collect$$rtentry$$0000000C  c_w.l(rtentry2.o)
-    0x0000034a   0x00000008   Code   RO          572    .ARM.Collect$$rtentry$$0000000D  c_w.l(rtentry2.o)
-    0x00000352   0x00000002   Code   RO          593    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x00000354   0x00000000   Code   RO          639    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x00000354   0x00000004   Code   RO          640    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x00000358   0x00000006   Code   RO          641    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x0000031c   0x0000001c   Code   RO          714    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x00000338   0x00000002   Code   RO          583    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x0000033a   0x00000000   Code   RO          590    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          593    .ARM.Collect$$libinit$$00000008  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          595    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          597    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          600    .ARM.Collect$$libinit$$0000000F  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          602    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          604    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          606    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          608    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          610    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          612    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          614    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          616    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          618    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          620    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          624    .ARM.Collect$$libinit$$0000002A  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          626    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          628    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x0000033a   0x00000000   Code   RO          630    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x0000033a   0x00000002   Code   RO          631    .ARM.Collect$$libinit$$00000031  c_w.l(libinit2.o)
+    0x0000033c   0x00000002   Code   RO          651    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x0000033e   0x00000000   Code   RO          665    .ARM.Collect$$libshutdown$$00000003  c_w.l(libshutdown2.o)
+    0x0000033e   0x00000000   Code   RO          668    .ARM.Collect$$libshutdown$$00000006  c_w.l(libshutdown2.o)
+    0x0000033e   0x00000000   Code   RO          671    .ARM.Collect$$libshutdown$$00000009  c_w.l(libshutdown2.o)
+    0x0000033e   0x00000000   Code   RO          673    .ARM.Collect$$libshutdown$$0000000B  c_w.l(libshutdown2.o)
+    0x0000033e   0x00000000   Code   RO          676    .ARM.Collect$$libshutdown$$0000000E  c_w.l(libshutdown2.o)
+    0x0000033e   0x00000002   Code   RO          677    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
+    0x00000340   0x00000000   Code   RO          558    .ARM.Collect$$rtentry$$00000000  c_w.l(rtentry.o)
+    0x00000340   0x00000000   Code   RO          560    .ARM.Collect$$rtentry$$00000002  c_w.l(rtentry2.o)
+    0x00000340   0x00000006   Code   RO          572    .ARM.Collect$$rtentry$$00000004  c_w.l(rtentry4.o)
+    0x00000346   0x00000000   Code   RO          562    .ARM.Collect$$rtentry$$00000009  c_w.l(rtentry2.o)
+    0x00000346   0x00000004   Code   RO          563    .ARM.Collect$$rtentry$$0000000A  c_w.l(rtentry2.o)
+    0x0000034a   0x00000000   Code   RO          565    .ARM.Collect$$rtentry$$0000000C  c_w.l(rtentry2.o)
+    0x0000034a   0x00000008   Code   RO          566    .ARM.Collect$$rtentry$$0000000D  c_w.l(rtentry2.o)
+    0x00000352   0x00000002   Code   RO          587    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x00000354   0x00000000   Code   RO          633    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x00000354   0x00000004   Code   RO          634    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x00000358   0x00000006   Code   RO          635    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x0000035e   0x00000002   PAD
     0x00000360   0x00000030   Code   RO            4    .text               startup.o
     0x00000390   0x00000040   Code   RO           13    .text               random.o
-    0x000003d0   0x00000248   Code   RO          151    .text               print.o
-    0x00000618   0x00000006   Code   RO          560    .text               c_w.l(heapauxi.o)
-    0x0000061e   0x0000004a   Code   RO          580    .text               c_w.l(sys_stackheap_outer.o)
-    0x00000668   0x0000000c   Code   RO          582    .text               c_w.l(exit.o)
-    0x00000674   0x00000008   Code   RO          590    .text               c_w.l(libspace.o)
-    0x0000067c   0x0000000c   Code   RO          649    .text               c_w.l(sys_exit.o)
-    0x00000688   0x00000002   Code   RO          660    .text               c_w.l(use_no_semi.o)
-    0x0000068a   0x00000000   Code   RO          662    .text               c_w.l(indicate_semi.o)
+    0x000003d0   0x00000248   Code   RO          145    .text               print.o
+    0x00000618   0x00000006   Code   RO          554    .text               c_w.l(heapauxi.o)
+    0x0000061e   0x0000004a   Code   RO          574    .text               c_w.l(sys_stackheap_outer.o)
+    0x00000668   0x0000000c   Code   RO          576    .text               c_w.l(exit.o)
+    0x00000674   0x00000008   Code   RO          584    .text               c_w.l(libspace.o)
+    0x0000067c   0x0000000c   Code   RO          643    .text               c_w.l(sys_exit.o)
+    0x00000688   0x00000002   Code   RO          654    .text               c_w.l(use_no_semi.o)
+    0x0000068a   0x00000000   Code   RO          656    .text               c_w.l(indicate_semi.o)
     0x0000068a   0x00000002   PAD
-    0x0000068c   0x0000000c   Code   RO          154    i.ADC               spaceinvaders.o
+    0x0000068c   0x0000000c   Code   RO          456    i.ADC               twenty20.o
     0x00000698   0x0000002c   Code   RO           38    i.ADC0_In           adc.o
     0x000006c4   0x000000ec   Code   RO           39    i.ADC0_Init         adc.o
-    0x000007b0   0x0000002e   Code   RO          155    i.Collision         spaceinvaders.o
+    0x000007b0   0x0000002e   Code   RO          457    i.Collision         twenty20.o
     0x000007de   0x00000002   PAD
     0x000007e0   0x00000060   Code   RO           16    i.DAC_Init          dac.o
     0x00000840   0x0000000c   Code   RO           17    i.DAC_Out           dac.o
-    0x0000084c   0x00000024   Code   RO          156    i.Delay100ms        spaceinvaders.o
-    0x00000870   0x00000020   Code   RO          256    i.Delay1ms          st7735.o
-    0x00000890   0x00000180   Code   RO          157    i.GameDraw          spaceinvaders.o
-    0x00000a10   0x000000d8   Code   RO          158    i.GameInit          spaceinvaders.o
-    0x00000ae8   0x00000330   Code   RO          159    i.GameMove          spaceinvaders.o
-    0x00000e18   0x00000018   Code   RO          161    i.LCD_OutUDec       spaceinvaders.o
-    0x00000e30   0x00000010   Code   RO          259    i.Output_Init       st7735.o
-    0x00000e40   0x0000007c   Code   RO          546    i.PLL_Init          pll.o
-    0x00000ebc   0x00000050   Code   RO          162    i.PortE_Init        spaceinvaders.o
-    0x00000f0c   0x00000008   Code   RO          163    i.Random250         spaceinvaders.o
-    0x00000f14   0x00000120   Code   RO          263    i.ST7735_DrawBitmap  st7735.o
-    0x00001034   0x000000f4   Code   RO          265    i.ST7735_DrawCharS  st7735.o
-    0x00001128   0x00000048   Code   RO          269    i.ST7735_DrawPixel  st7735.o
-    0x00001170   0x00000056   Code   RO          271    i.ST7735_DrawString  st7735.o
+    0x0000084c   0x00000024   Code   RO          458    i.Delay100ms        twenty20.o
+    0x00000870   0x00000020   Code   RO          148    i.Delay1ms          st7735.o
+    0x00000890   0x00000180   Code   RO          459    i.GameDraw          twenty20.o
+    0x00000a10   0x000000d8   Code   RO          460    i.GameInit          twenty20.o
+    0x00000ae8   0x00000330   Code   RO          461    i.GameMove          twenty20.o
+    0x00000e18   0x00000018   Code   RO          463    i.LCD_OutUDec       twenty20.o
+    0x00000e30   0x00000010   Code   RO          151    i.Output_Init       st7735.o
+    0x00000e40   0x0000007c   Code   RO          441    i.PLL_Init          pll.o
+    0x00000ebc   0x00000050   Code   RO          464    i.PortE_Init        twenty20.o
+    0x00000f0c   0x00000008   Code   RO          465    i.Random250         twenty20.o
+    0x00000f14   0x00000120   Code   RO          155    i.ST7735_DrawBitmap  st7735.o
+    0x00001034   0x000000f4   Code   RO          157    i.ST7735_DrawCharS  st7735.o
+    0x00001128   0x00000048   Code   RO          161    i.ST7735_DrawPixel  st7735.o
+    0x00001170   0x00000056   Code   RO          163    i.ST7735_DrawString  st7735.o
     0x000011c6   0x00000002   PAD
-    0x000011c8   0x000000ac   Code   RO          272    i.ST7735_FillRect   st7735.o
-    0x00001274   0x00000024   Code   RO          273    i.ST7735_FillScreen  st7735.o
-    0x00001298   0x0000007c   Code   RO          275    i.ST7735_InitR      st7735.o
-    0x00001314   0x000000d4   Code   RO          277    i.ST7735_OutChar    st7735.o
-    0x000013e8   0x00000018   Code   RO          278    i.ST7735_OutString  st7735.o
-    0x00001400   0x00000020   Code   RO          288    i.ST7735_SetCursor  st7735.o
+    0x000011c8   0x000000ac   Code   RO          164    i.ST7735_FillRect   st7735.o
+    0x00001274   0x00000024   Code   RO          165    i.ST7735_FillScreen  st7735.o
+    0x00001298   0x0000007c   Code   RO          167    i.ST7735_InitR      st7735.o
+    0x00001314   0x000000d4   Code   RO          169    i.ST7735_OutChar    st7735.o
+    0x000013e8   0x00000018   Code   RO          170    i.ST7735_OutString  st7735.o
+    0x00001400   0x00000020   Code   RO          180    i.ST7735_SetCursor  st7735.o
     0x00001420   0x00000048   Code   RO          101    i.SoundTask         sound.o
     0x00001468   0x00000014   Code   RO          102    i.Sound_Collected   sound.o
-    0x0000147c   0x00000020   Code   RO          104    i.Sound_Init        sound.o
-    0x0000149c   0x00000014   Code   RO          105    i.Sound_Jump        sound.o
-    0x000014b0   0x00000020   Code   RO          106    i.Sound_Play        sound.o
-    0x000014d0   0x00000018   Code   RO          164    i.SysTickInit       spaceinvaders.o
-    0x000014e8   0x00000014   Code   RO          165    i.SysTick_Handler   spaceinvaders.o
+    0x0000147c   0x00000020   Code   RO          103    i.Sound_Init        sound.o
+    0x0000149c   0x00000014   Code   RO          104    i.Sound_Jump        sound.o
+    0x000014b0   0x00000020   Code   RO          105    i.Sound_Play        sound.o
+    0x000014d0   0x00000018   Code   RO          466    i.SysTickInit       twenty20.o
+    0x000014e8   0x00000014   Code   RO          467    i.SysTick_Handler   twenty20.o
     0x000014fc   0x00000018   Code   RO           56    i.Timer0A_Handler   timer0.o
     0x00001514   0x00000060   Code   RO           57    i.Timer0_Init       timer0.o
     0x00001574   0x00000018   Code   RO           80    i.Timer1A_Handler   timer1.o
     0x0000158c   0x00000060   Code   RO           81    i.Timer1_Init       timer1.o
-    0x000015ec   0x00000056   Code   RO          292    i.commandList       st7735.o
+    0x000015ec   0x00000056   Code   RO          184    i.commandList       st7735.o
     0x00001642   0x00000002   PAD
-    0x00001644   0x00000184   Code   RO          293    i.commonInit        st7735.o
-    0x000017c8   0x0000025c   Code   RO          166    i.main              spaceinvaders.o
-    0x00001a24   0x00000012   Code   RO          299    i.pushColor         st7735.o
+    0x00001644   0x00000184   Code   RO          185    i.commonInit        st7735.o
+    0x000017c8   0x0000025c   Code   RO          468    i.main              twenty20.o
+    0x00001a24   0x00000012   Code   RO          191    i.pushColor         st7735.o
     0x00001a36   0x00000002   PAD
-    0x00001a38   0x00000074   Code   RO          300    i.setAddrWindow     st7735.o
-    0x00001aac   0x00000038   Code   RO          301    i.writecommand      st7735.o
-    0x00001ae4   0x00000020   Code   RO          302    i.writedata         st7735.o
-    0x00001b04   0x00001eb2   Data   RO          107    .constdata          sound.o
-    0x000039b6   0x00003304   Data   RO          168    .constdata          spaceinvaders.o
-    0x00006cba   0x00000842   Data   RO          304    .constdata          st7735.o
-    0x000074fc   0x00000020   Data   RO          714    Region$$Table       anon$$obj.o
+    0x00001a38   0x00000074   Code   RO          192    i.setAddrWindow     st7735.o
+    0x00001aac   0x00000038   Code   RO          193    i.writecommand      st7735.o
+    0x00001ae4   0x00000020   Code   RO          194    i.writedata         st7735.o
+    0x00001b04   0x00001eb2   Data   RO          106    .constdata          sound.o
+    0x000039b6   0x00000842   Data   RO          196    .constdata          st7735.o
+    0x000041f8   0x00003304   Data   RO          470    .constdata          twenty20.o
+    0x000074fc   0x00000020   Data   RO          708    Region$$Table       anon$$obj.o
 
 
     Execution Region ER_RW (Base: 0x20000000, Size: 0x00000184, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000000c4])
@@ -960,19 +959,19 @@ Memory Map of the image
 
     0x20000000   0x00000004   Data   RW           58    .data               timer0.o
     0x20000004   0x00000004   Data   RW           82    .data               timer1.o
-    0x20000008   0x00000008   Data   RW          108    .data               sound.o
-    0x20000010   0x00000138   Data   RW          169    .data               spaceinvaders.o
-    0x20000148   0x0000002c   Data   RW          305    .data               st7735.o
+    0x20000008   0x00000008   Data   RW          107    .data               sound.o
+    0x20000010   0x0000002c   Data   RW          197    .data               st7735.o
+    0x2000003c   0x00000138   Data   RW          471    .data               twenty20.o
     0x20000174   0x00000004   Data   RW           12    DATA                random.o
-    0x20000178   0x0000000c   Data   RW          150    DATA                print.o
+    0x20000178   0x0000000c   Data   RW          144    DATA                print.o
 
 
     Execution Region ER_ZI (Base: 0x20000184, Size: 0x00000544, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000184   0x000000e0   Zero   RW          167    .bss                spaceinvaders.o
-    0x20000264   0x00000060   Zero   RW          591    .bss                c_w.l(libspace.o)
+    0x20000184   0x000000e0   Zero   RW          469    .bss                twenty20.o
+    0x20000264   0x00000060   Zero   RW          585    .bss                c_w.l(libspace.o)
     0x200002c4   0x00000004   PAD
     0x200002c8   0x00000000   Zero   RW            2    HEAP                startup.o
     0x200002c8   0x00000400   Zero   RW            1    STACK               startup.o
@@ -990,15 +989,15 @@ Image component sizes
        124          6          0          0          0        407   pll.o
        584          4          0         12          0        324   print.o
         64         14          0          4          0        192   random.o
-       176         48       7858          8          0       2517   sound.o
-      2270        300      13060        312        224       8637   spaceinvaders.o
-      2034        202       2114         44          0      12899   st7735.o
+       176         48       7858          8          0       2525   sound.o
+      2034        202       2114         44          0      13431   st7735.o
        692        632          0          0       1024        884   startup.o
        120         28          0          4          0       4008   timer0.o
        120         28          0          4          0       1240   timer1.o
+      2270        300      13060        312        224       7965   twenty20.o
 
     ----------------------------------------------------------------------
-      6580       1320      23064        388       1248      34131   Object Totals
+      6580       1320      23064        388       1248      33999   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          8          0          0          0          0          0   (incl. Padding)
 
@@ -1047,8 +1046,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      6916       1336      23064        388       1348      32263   Grand Totals
-      6916       1336      23064        196       1348      32263   ELF Image Totals (compressed)
+      6916       1336      23064        388       1348      32131   Grand Totals
+      6916       1336      23064        196       1348      32131   ELF Image Totals (compressed)
       6916       1336      23064        196          0          0   ROM Totals
 
 ==============================================================================

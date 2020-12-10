@@ -1,13 +1,9 @@
-// SpaceInvaders.c (RENAME SOON)
+// Twenty20.c 
 // Runs on LM4F120/TM4C123
-// Jonathan Valvano and Daniel Valvano 
-// This is a starter project for the EdX Lab 15
-
-// Last Modified: 8/11/2020 
-// for images and sounds, see http://users.ece.utexas.edu/~valvano/Volume1/Lab10Files
-// http://www.spaceinvaders.de/
-// sounds at http://www.classicgaming.cc/classics/spaceinvaders/sounds.php
-// http://www.classicgaming.cc/classics/spaceinvaders/playguide.php
+// Original Author: Jonathan Valvano and Daniel Valvano
+// Original Date:   October 11, 2020
+// Modified by:     Benhur Yonas and Diondre Dubose
+// Modified on:     December 10, 2020
 
 
 /* This example accompanies the books
@@ -31,19 +27,24 @@
  
  
  
-// ******* Possible Hardware I/O connections*******************
+// ******* Hardware I/O connections*******************
+
+// Controls:
 // Slide pot pin 1 connected to ground
 // Slide pot pin 2 connected to PE2/AIN1
 // Slide pot pin 3 connected to +3.3V 
-// fire button connected to PE0
-// special weapon fire button connected to PE1
-// 8*R resistor DAC bit 0 on PB0 (least significant bit)
-// 4*R resistor DAC bit 1 on PB1
-// 2*R resistor DAC bit 2 on PB2
-// 1*R resistor DAC bit 3 on PB3 (most significant bit)
-// LED on PB4
-// LED on PB5
+// Jump button connected to PE0
+// Duck button connected to PE1
 
+// DAC/Sound
+// 32*R resistor DAC bit 0 on PB0 (least significant bit)
+// 16*R resistor DAC bit 1 on PB1
+// 8*R resistor DAC bit 2 on PB2 
+// 4*R resistor DAC bit 3 on PB3
+// 2*R resistor DAC bit 4 on PB4
+// 1*R resistor DAC bit 5 on PB5 (most significant bit)
+
+// LCD Display (using ST7735 display)
 // Backlight (pin 10) connected to +3.3 V
 // MISO (pin 9) unconnected
 // SCK (pin 8) connected to PA2 (SSI0Clk)
@@ -84,9 +85,8 @@ void LCD_OutDistance(unsigned long n){
   ST7735_OutString((char *)String);  // output using your function
 }
 
-void PortE_Init(void){ 
-//  GPIO_PORTE_LOCK_R = 0x4C4F434B;   // 2) unlock PortE PE0  
-//  GPIO_PORTE_CR_R = 0x1F;           // allow changes to PE4-0       
+// PortE_Init() initializes the two buttons used to jump and duck
+void PortE_Init(void){     
   GPIO_PORTE_AMSEL_R &= ~0x03;        // 3) disable analog function
   GPIO_PORTE_PCTL_R &= ~0x00000003;   // 4) GPIO clear bit PCTL  
   GPIO_PORTE_DIR_R &= ~0x03;          // 5) PF4,PF0 input, PF3,PF2,PF1 output   
@@ -133,17 +133,17 @@ sprite_t Hornet;
 
 // misc variables used across functions during gameplay
 int moveflag, ADCflag; 								// semaphore for needDraw and ADC person movement
-int lives; 												// semaphore for end of game
+int lives; 														// semaphore for end of game
 unsigned long ADCdata, ShipDistance; 	// ADC variables used for movement of ship
 unsigned long score = 0;							// Initalizes score to zero (currently not implemented)
 unsigned long random;									// used to grab value from random generator
 int language; 												// flag for choosing correct language
-int jump_flag, duck_flag = 0;							// flag to note if jump is under process
+int jump_flag, duck_flag = 0;					// flag to note if jump is under process
 
 // Random250() generates a random number between 0 and 255
 unsigned long Random250(void){
 	return Random();
-	//return ((Random()>>24)%250);
+	
 }
 
 
@@ -203,9 +203,6 @@ void GameInit(void){
 // returns a 0 if no collision detected
 // Credit given to Aleksey (http://eekit.blogspot.com/2017/02/the-basics-of-arduino-game-programming_19.html)
 unsigned char Collision(unsigned char x1, unsigned char y1, unsigned char w1, unsigned char h1, unsigned char x2, unsigned char y2, unsigned char w2, unsigned char h2){
-	//if (x1>(x2+w2) || x2>(x1+w1)) return 0;
-	//if (y1>(y2-h2) || y2>(y1-h1)) return 0;
-	
 	if(((x2+w2)>x1) && ((y2+h2)>y1) && (x2 < (x1+w1)) && (y2 < (y1+h1))){
 		return 1;
 	}
@@ -220,7 +217,7 @@ unsigned char Collision(unsigned char x1, unsigned char y1, unsigned char w1, un
 // plays sounds based on collisions
 void GameMove(void){ 
 	
-	// Virus model Move (ALPHA)
+	// Virus model Move 
 	if (Virus.life == dead){  		// Spawns new sprite once old one is gone
 		random = Random250();
 		if (random <= 95){
@@ -244,7 +241,7 @@ void GameMove(void){
 	}
 	
 	
-	// Cure model Move (ALPHA)
+	// Cure model Move 
 	if (Cure.life == dead){  		// Spawns new sprite once old one is gone
 		random = Random250();
 		if (random <= 112){
@@ -269,7 +266,7 @@ void GameMove(void){
 	}
 	
 		
-	// Hornet model Move (ALPHA)
+	// Hornet model Move 
 	if (Hornet.life == dead){  		// Spawns new sprite once old one is gone
 		random = Random250();
 		if ((random <= 160) && (random > 120)){
@@ -316,10 +313,7 @@ void GameMove(void){
 	}
 
 	if(jump_flag == 1){
-		//if(Player.y < 100){ // replace for new jump
-			//Player.vy = 2;
-		Player.vy++; // remove for old jump
-		//}
+		Player.vy++; 
 		if(Player.y > 159){
 			Player.vy = 0;
 			jump_flag = 0;
@@ -510,8 +504,8 @@ int main(void){
 }
 
 
-// You can't use this timer, it is here for starter code only 
-// you must use interrupts to perform delays
+
+// Delay100ms() delays 100ms 
 void Delay100ms(uint32_t count){uint32_t volatile time;
   while(count>0){
     time = 727240;  // 0.1sec at 80 MHz
