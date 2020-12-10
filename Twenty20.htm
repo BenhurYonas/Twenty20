@@ -1,9 +1,9 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html><head>
-<title>Static Call Graph - [.\SpaceInvaders.axf]</title></head>
+<title>Static Call Graph - [.\Twenty20.axf]</title></head>
 <body><HR>
-<H1>Static Call Graph for image .\SpaceInvaders.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Tue Dec 01 17:35:14 2020
+<H1>Static Call Graph for image .\Twenty20.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Thu Dec 10 14:59:24 2020
 <BR><P>
 <H3>Maximum Stack Usage =        168 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -43,7 +43,7 @@ Mutually Recursive functions
 <H3>
 Function Pointers
 </H3><UL>
- <LI><a href="#[80]">ADC</a> from spaceinvaders.o(i.ADC) referenced from spaceinvaders.o(i.main)
+ <LI><a href="#[80]">ADC</a> from twenty20.o(i.ADC) referenced from twenty20.o(i.main)
  <LI><a href="#[1b]">ADC0Seq0_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
  <LI><a href="#[1c]">ADC0Seq1_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
  <LI><a href="#[1d]">ADC0Seq2_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
@@ -131,7 +131,7 @@ Function Pointers
  <LI><a href="#[9]">SVC_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
  <LI><a href="#[7f]">SoundTask</a> from sound.o(i.SoundTask) referenced from sound.o(i.Sound_Init)
  <LI><a href="#[29]">SysCtl_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
- <LI><a href="#[c]">SysTick_Handler</a> from spaceinvaders.o(i.SysTick_Handler) referenced from startup.o(RESET)
+ <LI><a href="#[c]">SysTick_Handler</a> from twenty20.o(i.SysTick_Handler) referenced from startup.o(RESET)
  <LI><a href="#[20]">Timer0A_Handler</a> from timer0.o(i.Timer0A_Handler) referenced from startup.o(RESET)
  <LI><a href="#[21]">Timer0B_Handler</a> from startup.o(RESET) referenced from startup.o(RESET)
  <LI><a href="#[22]">Timer1A_Handler</a> from timer1.o(i.Timer1A_Handler) referenced from startup.o(RESET)
@@ -777,8 +777,8 @@ Global Symbols
 
 <P><STRONG><a name="[ee]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[80]"></a>ADC</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, spaceinvaders.o(i.ADC))
-<BR>[Address Reference Count : 1]<UL><LI> spaceinvaders.o(i.main)
+<P><STRONG><a name="[80]"></a>ADC</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, twenty20.o(i.ADC))
+<BR>[Address Reference Count : 1]<UL><LI> twenty20.o(i.main)
 </UL>
 <P><STRONG><a name="[9a]"></a>ADC0_In</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, adc.o(i.ADC0_In))
 <BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GameMove
@@ -788,7 +788,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[98]"></a>Collision</STRONG> (Thumb, 46 bytes, Stack size 20 bytes, spaceinvaders.o(i.Collision))
+<P><STRONG><a name="[98]"></a>Collision</STRONG> (Thumb, 46 bytes, Stack size 20 bytes, twenty20.o(i.Collision))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = Collision
 </UL>
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GameMove
@@ -804,7 +804,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SoundTask
 </UL>
 
-<P><STRONG><a name="[bd]"></a>Delay100ms</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, spaceinvaders.o(i.Delay100ms))
+<P><STRONG><a name="[bd]"></a>Delay100ms</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, twenty20.o(i.Delay100ms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Delay100ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -817,7 +817,7 @@ Global Symbols
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commandList
 </UL>
 
-<P><STRONG><a name="[94]"></a>GameDraw</STRONG> (Thumb, 362 bytes, Stack size 16 bytes, spaceinvaders.o(i.GameDraw))
+<P><STRONG><a name="[94]"></a>GameDraw</STRONG> (Thumb, 362 bytes, Stack size 16 bytes, twenty20.o(i.GameDraw))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = GameDraw &rArr; ST7735_DrawBitmap &rArr; setAddrWindow
 </UL>
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawBitmap
@@ -825,11 +825,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[bc]"></a>GameInit</STRONG> (Thumb, 158 bytes, Stack size 0 bytes, spaceinvaders.o(i.GameInit))
+<P><STRONG><a name="[bc]"></a>GameInit</STRONG> (Thumb, 158 bytes, Stack size 0 bytes, twenty20.o(i.GameInit))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[96]"></a>GameMove</STRONG> (Thumb, 754 bytes, Stack size 24 bytes, spaceinvaders.o(i.GameMove))
+<P><STRONG><a name="[96]"></a>GameMove</STRONG> (Thumb, 754 bytes, Stack size 24 bytes, twenty20.o(i.GameMove))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44 + Unknown Stack Size
 <LI>Call Chain = GameMove &rArr; Collision
 </UL>
@@ -842,7 +842,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
-<P><STRONG><a name="[9c]"></a>LCD_OutUDec</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, spaceinvaders.o(i.LCD_OutUDec))
+<P><STRONG><a name="[9c]"></a>LCD_OutUDec</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, twenty20.o(i.LCD_OutUDec))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = LCD_OutUDec &rArr; ST7735_OutString &rArr; ST7735_OutChar &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
@@ -865,11 +865,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[b8]"></a>PortE_Init</STRONG> (Thumb, 70 bytes, Stack size 0 bytes, spaceinvaders.o(i.PortE_Init))
+<P><STRONG><a name="[b8]"></a>PortE_Init</STRONG> (Thumb, 70 bytes, Stack size 0 bytes, twenty20.o(i.PortE_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[97]"></a>Random250</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, spaceinvaders.o(i.Random250))
+<P><STRONG><a name="[97]"></a>Random250</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, twenty20.o(i.Random250))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
 <LI>Call Chain = Random250
 </UL>
@@ -920,8 +920,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writedata
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setAddrWindow
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawCharS
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
+<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawCharS
 </UL>
 
 <P><STRONG><a name="[a1]"></a>ST7735_FillScreen</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, st7735.o(i.ST7735_FillScreen))
@@ -929,20 +929,20 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillRect
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
+<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Init
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[a0]"></a>ST7735_InitR</STRONG> (Thumb, 90 bytes, Stack size 8 bytes, st7735.o(i.ST7735_InitR))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = ST7735_InitR &rArr; ST7735_FillScreen &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writedata
+<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writedata
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writecommand
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commonInit
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commandList
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Init
 </UL>
@@ -966,8 +966,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ad]"></a>ST7735_SetCursor</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, st7735.o(i.ST7735_SetCursor))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
 </UL>
 
 <P><STRONG><a name="[7f]"></a>SoundTask</STRONG> (Thumb, 58 bytes, Stack size 8 bytes, sound.o(i.SoundTask))
@@ -1007,11 +1007,11 @@ Global Symbols
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sound_Collected
 </UL>
 
-<P><STRONG><a name="[ba]"></a>SysTickInit</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, spaceinvaders.o(i.SysTickInit))
+<P><STRONG><a name="[ba]"></a>SysTickInit</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, twenty20.o(i.SysTickInit))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, spaceinvaders.o(i.SysTick_Handler))
+<P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, twenty20.o(i.SysTick_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52 + Unknown Stack Size
 <LI>Call Chain = SysTick_Handler &rArr; GameMove &rArr; Collision
 </UL>
@@ -1037,21 +1037,21 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8b]"></a>main</STRONG> (Thumb, 482 bytes, Stack size 0 bytes, spaceinvaders.o(i.main))
+<P><STRONG><a name="[8b]"></a>main</STRONG> (Thumb, 482 bytes, Stack size 0 bytes, twenty20.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = main &rArr; LCD_OutUDec &rArr; ST7735_OutString &rArr; ST7735_OutChar &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutString
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Init
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTickInit
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTickInit
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortE_Init
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_OutUDec
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GameInit
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GameDraw
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay100ms
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutString
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Init
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sound_Init
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer1_Init
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0_Init
@@ -1113,10 +1113,10 @@ Local Symbols
 <P><STRONG><a name="[a4]"></a>writedata</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, st7735.o(i.writedata))
 <BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillRect
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawBitmap
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setAddrWindow
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pushColor
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commandList
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawBitmap
 </UL>
 <P>
 <H3>

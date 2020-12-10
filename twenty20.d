@@ -1,0 +1,11 @@
+.\twenty20.o: Twenty20.c
+.\twenty20.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\twenty20.o: tm4c123gh6pm.h
+.\twenty20.o: ST7735.h
+.\twenty20.o: Random.h
+.\twenty20.o: PLL.h
+.\twenty20.o: ADC.h
+.\twenty20.o: DAC.h
+.\twenty20.o: Images.h
+.\twenty20.o: Timer1.h
+.\twenty20.o: Sound.h
